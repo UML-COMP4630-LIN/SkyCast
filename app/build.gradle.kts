@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    id("androidx.navigation.safeargs")
 }
 
 android {
@@ -14,6 +15,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 
     buildTypes {
@@ -32,6 +37,35 @@ android {
 }
 
 dependencies {
+
+    // Fragment library version
+    val fragment_version = "1.8.4"
+    // Navigation component version
+    val nav_version = "2.8.3"
+
+    // Fragment dependencies
+    implementation("androidx.fragment:fragment:$fragment_version")
+    implementation("androidx.fragment:fragment-ktx:$fragment_version")
+
+    // Material Design library for styling UI components
+    implementation("com.google.android.material:material:1.12.0")
+
+    // Navigation dependencies
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+
+    // Feature module support
+    implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
+
+    // Testing Navigation
+    androidTestImplementation("androidx.navigation:navigation-testing:$nav_version")
+
+    // Jetpack Compose Integration (if using Jetpack Compose)
+    implementation("androidx.navigation:navigation-compose:$nav_version")
+
+
+    // Check if this needs to be removed
+    implementation("androidx.appcompat:appcompat:1.6.1")
 
     implementation(libs.appcompat)
     implementation(libs.material)
