@@ -7,4 +7,22 @@
     android:background="@drawable/city_background"
     tools:context=".CitiesFragment">
 
+    <ImageView
+        android:id="@+id/skylineImage"
+        android:layout_width="match_parent"
+        android:layout_height="175dp"
+        android:src="@drawable/cityline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cityListRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/skylineImage" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

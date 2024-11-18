@@ -43,6 +43,9 @@ dependencies {
     // Navigation component version
     val nav_version = "2.8.3"
 
+    // RecyclerView dependency
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
+
     // Fragment dependencies
     implementation("androidx.fragment:fragment:$fragment_version")
     implementation("androidx.fragment:fragment-ktx:$fragment_version")
