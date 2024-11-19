@@ -30,7 +30,7 @@
     <ImageView
         android:id="@+id/weatherIconImage"
         android:layout_width="match_parent"
-        android:src="@drawable/sunWithCloud"
+        android:src="@drawable/cloudandsun"
         android:layout_height="400dp"
         app:layout_constraintTop_toBottomOf="@id/selectCitySpinner"
         app:layout_constraintStart_toStartOf="@id/selectCitySpinner"
@@ -43,7 +43,6 @@
         app:layout_constraintStart_toStartOf="@id/weatherIconImage"
         app:layout_constraintEnd_toEndOf="@id/weatherIconImage"
         android:text="@string/weatherButton"
-        android:background="#B3E0D6"
         android:layout_margin="20dp"
         />
 
