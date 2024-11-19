@@ -4,11 +4,10 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +28,13 @@ public class CitiesFragment extends Fragment {
         binding = FragmentCitiesBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        // Initialize the ViewModel
+        CityViewModel cityViewModel = new ViewModelProvider(requireActivity()).get(CityViewModel.class);
+
+        // Get the list of cities
         cityList = getCities();
 
+        // Restore saved states for cities (if any)
         if (savedInstanceState != null) {
             boolean[] checkedStates = savedInstanceState.getBooleanArray("cities_checked");
             if (checkedStates != null) {
@@ -40,10 +44,23 @@ public class CitiesFragment extends Fragment {
             }
         }
 
+        // Set up the RecyclerView layout manager
         setLayoutManager();
 
+        // Set up the adapter for RecyclerView
         cityAdapter = new CityAdapter(cityList);
         binding.cityListRecycler.setAdapter(cityAdapter);
+
+        // Update the ViewModel whenever cities are modified
+        binding.saveButton.setOnClickListener(v -> {
+            List<City> selectedCities = new ArrayList<>();
+            for (City city : cityList) {
+                if (city.isChecked()) {
+                    selectedCities.add(city);
+                }
+            }
+            cityViewModel.setSelectedCities(selectedCities); // Update the ViewModel
+        });
 
         return view;
     }
@@ -52,6 +69,7 @@ public class CitiesFragment extends Fragment {
     public void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);
 
+        // Save the checked states of cities
         boolean[] checkedStates = new boolean[cityList.size()];
         for (int i = 0; i < cityList.size(); i++) {
             checkedStates[i] = cityList.get(i).isChecked();
@@ -62,7 +80,7 @@ public class CitiesFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
+        binding = null; // Avoid memory leaks
     }
 
     private void setLayoutManager() {
@@ -79,6 +97,7 @@ public class CitiesFragment extends Fragment {
     }
 
     private List<City> getCities() {
+        // Predefined list of cities
         List<City> cities = new ArrayList<>();
         cities.add(new City("Boston"));
         cities.add(new City("Lowell"));
