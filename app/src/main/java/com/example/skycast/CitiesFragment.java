@@ -1,8 +1,10 @@
 package com.example.skycast;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,7 +28,6 @@ public class CitiesFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentCitiesBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        binding.cityListRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
         cityList = getCities();
 
@@ -38,6 +39,8 @@ public class CitiesFragment extends Fragment {
                 }
             }
         }
+
+        setLayoutManager();
 
         cityAdapter = new CityAdapter(cityList);
         binding.cityListRecycler.setAdapter(cityAdapter);
@@ -60,6 +63,19 @@ public class CitiesFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private void setLayoutManager() {
+        // Determine the orientation of the device
+        int orientation = getResources().getConfiguration().orientation;
+
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // Use GridLayoutManager with 2 columns in landscape mode
+            binding.cityListRecycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        } else {
+            // Use LinearLayoutManager in portrait mode
+            binding.cityListRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
     }
 
     private List<City> getCities() {
