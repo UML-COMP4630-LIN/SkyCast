@@ -14,7 +14,7 @@
     <string name="helpSectionText_Main2">
         button to obtain the latest weather information for
         that city. The app will fetch and display the current weather information for that city by
-        updating the weather icon and temperature using live data from our API.</string>
+        displaying the weather icon and temperature using live data from our API.</string>
     <string name="citySectionHeader_Main"> Manage Your Favorite Locations </string>
     <string name="helpSectionText_City1">The City Fragment allows you to customize your weather
         experience by selecting the cities you care</string>
@@ -25,6 +25,13 @@
         wherever you go. Want to de-clutter your list? Just uncheck a city, and it will be removed
         from the Home Fragment dropdown. Tailor your weather app to your needs in just a few
         taps!</string>
+    <string name="helpSectionHeader_Profile"> Want to Meet the Team? </string>
+    <string name="helpSectionText_Profile1">  Get to know the minds behind the Weather App! The
+        Profile Fragment introduces you to our team of</string>
+    <string name="helpSectionText_Profile2"> passionate developers, designers, and
+        innovators. Learn more about the team committed to delivering accurate and reliable weather
+        updates by visiting our profile page. </string>
+
 
     <string-array name="static_city_list">
         <item>Select a city</item>
