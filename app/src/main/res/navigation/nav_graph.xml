@@ -8,12 +8,10 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.skycast.HomeFragment"
-        android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/citiesFragment"
         android:name="com.example.skycast.CitiesFragment"
-        android:label="fragment_cities"
         tools:layout="@layout/fragment_cities" >
         <action
             android:id="@+id/action_citiesFragment_to_homeFragment"
@@ -23,6 +21,5 @@
     <fragment
         android:id="@+id/helpFragment"
         android:name="com.example.skycast.HelpFragment"
-        android:label="fragment_help"
         tools:layout="@layout/fragment_help" />
 </navigation>
