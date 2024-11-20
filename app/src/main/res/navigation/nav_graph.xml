@@ -22,4 +22,9 @@
         android:id="@+id/helpFragment"
         android:name="com.example.skycast.HelpFragment"
         tools:layout="@layout/fragment_help" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.skycast.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

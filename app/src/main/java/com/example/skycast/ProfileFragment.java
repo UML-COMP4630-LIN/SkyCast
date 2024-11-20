@@ -1,4 +1,4 @@
-package com.mobileapp.finalproject;
+package com.example.skycast;
 
 import android.os.Bundle;
 
