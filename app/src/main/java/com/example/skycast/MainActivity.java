@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Configure AppBarConfiguration for top-level destinations
         appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.homeFragment, R.id.citiesFragment, R.id.aboutFragment
+                R.id.homeFragment, R.id.citiesFragment, R.id.profileFragment
         ).build();
 
         // Link the toolbar with the NavController
