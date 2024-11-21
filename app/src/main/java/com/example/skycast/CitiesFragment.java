@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.skycast.databinding.FragmentCitiesBinding;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +58,7 @@ public class CitiesFragment extends Fragment {
             for (City city : cityList) {
                 if (city.isChecked()) {
                     selectedCities.add(city);
+                    Snackbar.make(v, "Checked Cities Added", Snackbar.LENGTH_SHORT).show();
                 }
             }
             cityViewModel.setSelectedCities(selectedCities); // Update the ViewModel
