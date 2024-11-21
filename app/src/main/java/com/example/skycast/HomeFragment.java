@@ -1,15 +1,21 @@
 package com.example.skycast;
 
+import android.animation.ValueAnimator;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 import com.example.skycast.databinding.FragmentHomeBinding;
 
@@ -17,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
+    private String currentImage = "cloudandsun"; // Track the current image
+    private GradientDrawable gradientDrawable;
 
     private FragmentHomeBinding binding;
 
@@ -25,6 +33,74 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
+
+
+        // Load the gradient background
+        gradientDrawable = (GradientDrawable) ContextCompat.getDrawable(requireContext(), R.drawable.gradient_background);
+
+        // Load animations
+        Animation growShrinkAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.shrink_grow);
+        Animation fadeOut = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_out);
+        Animation fadeIn = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in);
+
+        // Apply initial animation
+        binding.weatherIconImage.startAnimation(growShrinkAnimation);
+        binding.weatherIconImage.setTag("cloudandsun");
+
+        // Step 1: Chain animations
+        growShrinkAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {}
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                // Start fade-out based on current state
+                if (currentImage.equals("cloudandsun") || currentImage.equals("thunder")) {
+                    binding.weatherIconImage.startAnimation(fadeOut);
+                } else if (currentImage.equals("cloudtransition")) {
+                    binding.lightningbolt.startAnimation(fadeOut);
+                    binding.lightningcloud.startAnimation(fadeOut);
+                }
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
+
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {}
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                // Handle state transitions
+                handleStateTransition();
+
+                // Start the fade-in animation and shrink animations
+                if (currentImage.equals("cloudandsun") || currentImage.equals("thunder")) {
+                    binding.weatherIconImage.setVisibility(View.VISIBLE);
+                    binding.lightningcloud.setVisibility(View.INVISIBLE);
+                    binding.lightningbolt.setVisibility(View.INVISIBLE);
+                    binding.weatherIconImage.startAnimation(fadeIn);
+                    binding.weatherIconImage.startAnimation(growShrinkAnimation);
+                } else if (currentImage.equals("cloudtransition")) {
+                    binding.weatherIconImage.setVisibility(View.INVISIBLE);
+                    binding.lightningcloud.setVisibility(View.VISIBLE);
+                    binding.lightningbolt.setVisibility(View.VISIBLE);
+                    binding.lightningcloud.startAnimation(fadeIn);
+                    binding.lightningbolt.startAnimation(fadeIn);
+                    binding.lightningcloud.startAnimation(growShrinkAnimation);
+                    binding.lightningbolt.startAnimation(growShrinkAnimation);
+                }
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {}
+        });
+
+        // Dynamic background animation
+        animateBackground();
 
         // Access the shared ViewModel
         CityViewModel cityViewModel = new ViewModelProvider(requireActivity()).get(CityViewModel.class);
@@ -45,6 +121,85 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
+
+    private void handleStateTransition() {
+        switch (currentImage) {
+            case "cloudandsun":
+                binding.weatherIconImage.setImageResource(R.drawable.perfectclouds);
+                Log.d("StateTransition", "Transitioning to cloudtransition");
+                currentImage = "cloudtransition";
+                break;
+
+            case "cloudtransition":
+                Log.d("StateTransition", "Transitioning to thunder");
+                currentImage = "thunder";
+                break;
+
+            case "thunder":
+                binding.weatherIconImage.setImageResource(R.drawable.cloudandsun);
+                Log.d("StateTransition", "Transitioning to cloudandsun");
+                currentImage = "cloudandsun";
+                break;
+        }
+    }
+
+    private void animateBackground() {
+        // Retrieve the GradientDrawable from the root view's background
+        GradientDrawable gradientDrawable = (GradientDrawable) binding.getRoot().getBackground();
+
+        // Define multiple colors for the animation
+        int[] colors = {
+                Color.parseColor("#B3E0D6"), // Light blue
+                Color.parseColor("#FFA07A"), // Light orange
+                Color.parseColor("#FFD700"), // Golden yellow
+                Color.parseColor("#87CEEB")  // Sky blue
+        };
+
+        // Create a ValueAnimator to cycle through colors
+        ValueAnimator colorAnimator = ValueAnimator.ofFloat(0, colors.length - 1);
+        colorAnimator.setDuration(5000); // 5 seconds for the full cycle
+        colorAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        colorAnimator.setRepeatCount(ValueAnimator.INFINITE);
+
+        colorAnimator.addUpdateListener(animation -> {
+            // Get the current and next indices based on the animated fraction
+            float animatedValue = (float) animation.getAnimatedValue();
+            int startIndex = (int) Math.floor(animatedValue);
+            int endIndex = (int) Math.ceil(animatedValue);
+            float fraction = animatedValue - startIndex;
+
+            // Interpolate between the current and next color
+            int startColor = colors[startIndex];
+            int endColor = colors[endIndex];
+            int interpolatedColor = interpolateColor(startColor, endColor, fraction);
+
+            // Update the gradient with the interpolated color
+            gradientDrawable.setColors(new int[]{Color.WHITE, interpolatedColor});
+        });
+
+        // Start the animation
+        colorAnimator.start();
+    }
+
+    private int interpolateColor(int startColor, int endColor, float fraction) {
+        int startAlpha = (startColor >> 24) & 0xff;
+        int startRed = (startColor >> 16) & 0xff;
+        int startGreen = (startColor >> 8) & 0xff;
+        int startBlue = startColor & 0xff;
+
+        int endAlpha = (endColor >> 24) & 0xff;
+        int endRed = (endColor >> 16) & 0xff;
+        int endGreen = (endColor >> 8) & 0xff;
+        int endBlue = endColor & 0xff;
+
+        int interpolatedAlpha = (int) (startAlpha + fraction * (endAlpha - startAlpha));
+        int interpolatedRed = (int) (startRed + fraction * (endRed - startRed));
+        int interpolatedGreen = (int) (startGreen + fraction * (endGreen - startGreen));
+        int interpolatedBlue = (int) (startBlue + fraction * (endBlue - startBlue));
+
+        return (interpolatedAlpha << 24) | (interpolatedRed << 16) | (interpolatedGreen << 8) | interpolatedBlue;
+    }
+
 
     @Override
     public void onDestroyView() {
