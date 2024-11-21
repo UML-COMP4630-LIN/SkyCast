@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/help_background"
+    tools:context=".ProfileFragment">
+
+       <androidx.constraintlayout.widget.ConstraintLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+
+
+              <TextView
+                  android:id="@+id/angelos_description2"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="16dp"
+                  android:layout_marginTop="16dp"
+                  android:layout_marginEnd="16dp"
+                  android:justificationMode="inter_word"
+                  android:text="@string/angelos_description2"
+                  android:textColor="@color/white"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintHorizontal_bias="0.0"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintTop_toBottomOf="@+id/angelos_image" />
+
+              <TextView
+                  android:id="@+id/textView4"
+                  android:layout_width="256dp"
+                  android:layout_height="138dp"
+                  android:textColor="@color/white"
+                  android:justificationMode="inter_word"
+                  android:text="@string/angelos_description1"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintHorizontal_bias="0.102"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintTop_toBottomOf="@+id/theodor_title2" />
+
+              <TextView
+                  android:id="@+id/theodor_title2"
+                  android:layout_width="176dp"
+                  android:layout_height="38dp"
+                  android:layout_marginStart="16dp"
+                  android:layout_marginEnd="16dp"
+                  android:text="@string/angelos_boules"
+                  android:textColor="@color/white"
+                  android:textSize="25sp"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintHorizontal_bias="1.0"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+              <de.hdodenhof.circleimageview.CircleImageView
+                  android:id="@+id/theodor_image"
+                  android:layout_width="120dp"
+                  android:layout_height="120dp"
+                  android:layout_marginStart="16dp"
+                  android:src="@drawable/farag"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintTop_toBottomOf="@+id/theodor_title" />
+
+              <de.hdodenhof.circleimageview.CircleImageView
+                  android:id="@+id/angelos_image"
+                  android:layout_width="120dp"
+                  android:layout_height="120dp"
+                  android:layout_marginStart="3dp"
+                  android:src="@drawable/angelos"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintHorizontal_bias="0.0"
+                  app:layout_constraintStart_toEndOf="@+id/textView4"
+                  app:layout_constraintTop_toBottomOf="@+id/theodor_title2" />
+
+              <de.hdodenhof.circleimageview.CircleImageView
+                  android:id="@+id/afsa_image"
+                  android:layout_width="120dp"
+                  android:layout_height="120dp"
+                  android:layout_marginStart="16dp"
+                  android:layout_marginTop="8dp"
+                  android:src="@drawable/angelos"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintTop_toBottomOf="@+id/theodor_title3" />
+
+              <TextView
+                  android:id="@+id/theodor_title"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textColor="@color/white"
+                  android:layout_marginStart="16dp"
+                  android:layout_marginTop="16dp"
+                  android:layout_marginEnd="16dp"
+                  android:text="@string/theodor_farag"
+                  android:textSize="25sp"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintHorizontal_bias="0.0"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintTop_toTopOf="parent" />
+
+              <TextView
+                  android:id="@+id/theodor_title3"
+                  android:layout_width="match_parent"
+                  android:textColor="@color/white"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="16dp"
+                  android:layout_marginTop="16dp"
+                  android:layout_marginEnd="16dp"
+                  android:text="@string/asfa_nafe"
+                  android:textSize="25sp"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintHorizontal_bias="0.0"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintTop_toBottomOf="@+id/angelos_description2" />
+
+              <TextView
+                  android:id="@+id/textView2"
+                  android:layout_width="259dp"
+                  android:layout_height="141dp"
+
+                  android:layout_marginEnd="16dp"
+                  android:justificationMode="inter_word"
+                  android:text="@string/theo_description1"
+
+                  android:textColor="@color/white"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintHorizontal_bias="1.0"
+                  app:layout_constraintStart_toEndOf="@+id/theodor_image"
+                  app:layout_constraintTop_toBottomOf="@+id/theodor_title" />
+
+              <TextView
+                  android:id="@+id/textView3"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="16dp"
+                  android:layout_marginTop="12dp"
+                  android:layout_marginEnd="16dp"
+                  android:justificationMode="inter_word"
+                  android:text="@string/theo_description2"
+                  android:textColor="@color/white"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintHorizontal_bias="0.0"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintTop_toBottomOf="@+id/theodor_image" />
+
+              <TextView
+                  android:id="@+id/textView6"
+                  android:layout_width="258dp"
+                  android:layout_height="141dp"
+                  android:layout_marginTop="76dp"
+                  android:layout_marginEnd="16dp"
+                  android:justificationMode="inter_word"
+                  android:text="@string/afsa_description1"
+                  android:textColor="@color/white"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintHorizontal_bias="1.0"
+                  app:layout_constraintStart_toEndOf="@+id/afsa_image"
+                  app:layout_constraintTop_toBottomOf="@+id/theodor_title3" />
+
+              <TextView
+                  android:id="@+id/textView7"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginStart="16dp"
+                  android:layout_marginTop="12dp"
+                  android:layout_marginEnd="16dp"
+                  android:justificationMode="inter_word"
+                  android:text="@string/afsa_description2"
+                  android:textColor="@color/white"
+                  app:layout_constraintEnd_toEndOf="parent"
+                  app:layout_constraintHorizontal_bias="0.0"
+                  app:layout_constraintStart_toStartOf="parent"
+                  app:layout_constraintTop_toBottomOf="@+id/afsa_image" />
+
+       </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</ScrollView>

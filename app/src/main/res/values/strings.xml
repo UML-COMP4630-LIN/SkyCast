@@ -47,5 +47,31 @@
 
     <string name="addCities">+</string>
 
+    ` <!-- Profile Fragment-->
+    <string name="theo_description1">
+        Theodor Farag a Computer Science student passionate about building innovative and user-centric applications. Currently, I am contributing to a weather app project that delivers real-time weather updates and forecasts. My role involves
+        integrating APIs to fetch and display dynamic weather data, developing
+    </string>
+    <string name="theo_description2">
+         user-friendly interface components, and collaborating in an agile development environment to ensure efficient and iterative progress.
+        This project has allowed me to strengthen my skills in back-end and front-end development while focusing on creating an intuitive and seamless user experience.
+    </string>
+    <string name="theodor_farag">Theodor Farag</string>`
+    `    <string name="angelos_boules">Angelos Boules</string>
+    <string name="angelos_description1">
+        Angelos Boules is a talented Computer Science student with a passion for back-end development and problem-solving. As a key contributor to the weather app project, Angelos is responsible for developing the back-end infrastructure and implementing all the core logic that powers the app\’s
+    </string>
+
+    <string name="angelos_description2">
+        functionality. He also assists with designing and refining the user interface and collaborates across all components of the project to ensure a seamless and efficient user experience. His dedication to building robust systems and his attention to detail have been instrumental in driving the app\’s success.
+    </string>
+    <string name="asfa_nafe">Asfa Nafe</string>
+    <string name="afsa_description1">
+        Afsa Nafe is a dedicated Computer Science student with a passion for user interface design and front-end development. As the lead for the UI of the weather app project, Afsa is responsible for creating an intuitive, visually appealing, and user-friendly interface. They focus on ensuring that the app
+    </string>
+    <string name="afsa_description2">
+                provides a seamless experience for users by optimizing layout, responsiveness, and accessibility. Afsa’s creativity and attention to detail play a vital role in bringing the app’s features to life and enhancing the overall user experience.
+    </string>`
+
 
 </resources>

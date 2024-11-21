@@ -69,6 +69,8 @@ dependencies {
 
     // Check if this needs to be removed
     implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
+
 
     implementation(libs.appcompat)
     implementation(libs.material)
