@@ -43,6 +43,9 @@ dependencies {
     // Navigation component version
     val nav_version = "2.8.3"
 
+    // Circular Picture dependency
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
+
     // RecyclerView dependency
     implementation("androidx.recyclerview:recyclerview:1.2.1")
 

@@ -47,17 +47,21 @@
 
     <string name="addCities">+</string>
 
-    ` <!-- Profile Fragment-->
+    <!-- Profile Fragment-->
     <string name="theo_description1">
-        Theodor Farag a Computer Science student passionate about building innovative and user-centric applications. Currently, I am contributing to a weather app project that delivers real-time weather updates and forecasts. My role involves
-        integrating APIs to fetch and display dynamic weather data, developing
+        Theodor Farag a Computer Science student passionate about building innovative and
+        user-centric applications. Currently, I am contributing to a weather app project that
+        delivers real-time weather updates and forecasts. My role involves integrating APIs to fetch
+        and display dynamic weather data, developing
     </string>
     <string name="theo_description2">
-         user-friendly interface components, and collaborating in an agile development environment to ensure efficient and iterative progress.
-        This project has allowed me to strengthen my skills in back-end and front-end development while focusing on creating an intuitive and seamless user experience.
+        user-friendly interface components, and collaborating in an agile development environment
+        to ensure efficient and iterative progress. This project has allowed me to strengthen my
+        skills in back-end and front-end development while focusing on creating an intuitive and
+        seamless user experience.
     </string>
-    <string name="theodor_farag">Theodor Farag</string>`
-    `    <string name="angelos_boules">Angelos Boules</string>
+    <string name="theodor_farag">Theodor Farag</string>
+    <string name="angelos_boules">Angelos Boules</string>
     <string name="angelos_description1">
         Angelos Boules is a talented Computer Science student with a passion for back-end development and problem-solving. As a key contributor to the weather app project, Angelos is responsible for developing the back-end infrastructure and implementing all the core logic that powers the app\’s
     </string>
