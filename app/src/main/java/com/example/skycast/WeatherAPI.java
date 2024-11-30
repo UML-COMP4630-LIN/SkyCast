@@ -5,11 +5,12 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface WeatherAPI {
-    //https://api.openweathermap.org/data/2.5/weather?q=  Lowell  &appid=ebb181acd73164fc4439615127a01f5f
-    @GET("weather")//maybe add a ? after weather
+    //https://api.openweathermap.org/data/2.5/weather?q={CityName}&appid={APIKEY}
+    //base url = https://api.openweathermap.org/data/2.5/ get then adds weather and then the rest of the variable URL
+    @GET("weather")
     Call<WeatherData> getData(
-            @Query("q") String cityName, // this is the q
-            @Query("appid") String apiKey
+            @Query("q") String cityName, // this adds ?q= to the url added with the cityname given
+            @Query("appid") String apiKey // this adds &appid= with the API Key given
     );
 }
 

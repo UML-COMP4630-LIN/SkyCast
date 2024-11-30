@@ -39,12 +39,15 @@ public class WeatherFragment extends Fragment {
         GetWeather getWeather = new GetWeather();
         getWeather.getData(city);
 
+        //Observe implementation example
         getWeather.getCurrTemp().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(String s) {
                 currentTemp.setText(s);
             }
         });
+
+        //need the rest of the Observe for the other member variables in getWeather class
 
 
         // Inflate the layout for this fragment

@@ -13,6 +13,7 @@ import retrofit2.Retrofit;
 public class GetWeather {
     private static final String apiKey = "ebb181acd73164fc4439615127a01f5f";
     private MutableLiveData<String> currTemp = new MutableLiveData<>("");
+    //need to makes these into MutuableLivezData Varaibles
     private String lowTemp;
     private String highTemp;
     private String feels_like;
@@ -62,13 +63,16 @@ public class GetWeather {
         return String.format("%.1f", (kelvin - 273.15) * 9 / 5 + 32);
     }
     public void getData(String city) {
+        // Set up the API call and try to connect
         WeatherAPI myAPICall = RetrofitClient.getRetrofitInstance().create(WeatherAPI.class);
         Call<WeatherData> call = myAPICall.getData(city, apiKey);
         call.enqueue(new Callback<WeatherData>() {
+            // Try to connect to the API URL check if it worked other wised let us know why it didn't
             @Override
             public void onResponse(Call<WeatherData> call, Response<WeatherData> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     WeatherData weatherData = response.body();
+                    //place all the JSON values from Weather Data into this classes Variables
                     currTemp.setValue(convertKelvinToFahrenheit(weatherData.getMain().getTemp()) + " F°") ;
                     lowTemp = convertKelvinToFahrenheit(weatherData.getMain().getTempMin());
                     highTemp = convertKelvinToFahrenheit(weatherData.getMain().getTempMax());
@@ -85,7 +89,7 @@ public class GetWeather {
                     Log.d("Weather APP", "Response Code Value: " + response.code());
                 }
             }
-
+            // if API Fails then send an error log message
             @Override
             public void onFailure(Call<WeatherData> call, Throwable t) {
                 Log.e("Weather APP", "Error fetching Weather", t);

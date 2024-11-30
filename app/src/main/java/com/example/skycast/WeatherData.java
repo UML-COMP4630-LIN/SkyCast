@@ -4,13 +4,26 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/*
+This class
+*/
+
 public class WeatherData {
+    // JSON Object of main
     @SerializedName("main")
     private MainData main;
+
+    // JSON Object of wind
     @SerializedName("wind")
     private Wind wind;
+
+    // JSON Object of sys
     @SerializedName("sys")
     private Sys sys;
+
+    // JSON array of weather
+
+    // Each JSON Object has their own class that holds the information needed from each key provided in the API
     @SerializedName("weather")
     private List<Weather> weather;
     public MainData getMain() {
