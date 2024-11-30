@@ -8,6 +8,8 @@ import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +18,9 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.skycast.databinding.FragmentHomeBinding;
 
@@ -118,6 +123,26 @@ public class HomeFragment extends Fragment {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             binding.selectCitySpinner.setAdapter(adapter);
         });
+
+        // code for sending the selected city to the weather fragment
+        Button weatherButton = binding.generateweatherbutton;
+        Spinner citiesSpinner = binding.selectCitySpinner;
+
+        weatherButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // if the spinner is not empty then send the selected city
+                if (citiesSpinner.getAdapter().getCount() != 0) {
+                    String selectedCity = citiesSpinner.getSelectedItem().toString();
+                    HomeFragmentDirections.ActionHomeFragmentToWeatherFragment action = HomeFragmentDirections.actionHomeFragmentToWeatherFragment(selectedCity);
+                    Navigation.findNavController(v).navigate(action);
+                } else {
+                    //error message check for the user of they have no selected cities
+                    Toast.makeText(requireContext(), "Add Cities To your List", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
 
         return view;
     }
