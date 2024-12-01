@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,9 +38,8 @@ public class WeatherFragment extends Fragment {
         TextView cityName = binding.cityName;
         cityName.setText(city);
 
-        city = city.replace(" ", "+");
 
-        GetWeather getWeather = new GetWeather();
+        GetWeather getWeather = new ViewModelProvider(requireActivity()).get(GetWeather.class);
         getWeather.getData(city);
 
         //Observe implementation example
@@ -76,7 +76,33 @@ public class WeatherFragment extends Fragment {
                 windSpeed.setText(s);
             }
         });
-        //need the rest of the Observe for the other member variables in getWeather class
+
+        getWeather.getDescription().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                // update UI that contains weather description
+            }
+        });
+
+        getWeather.getMain().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                // update the imageView based on the description
+            }
+        });
+
+        getWeather.getSunrise().observe(getViewLifecycleOwner(), new Observer<Long>() {
+            @Override
+            public void onChanged(Long aLong) {
+                //update UI for sunrise value
+            }
+        });
+        getWeather.getSunset().observe(getViewLifecycleOwner(), new Observer<Long>() {
+            @Override
+            public void onChanged(Long aLong) {
+                    // update UI for sunset value
+            }
+        });
 
 
         // Inflate the layout for this fragment

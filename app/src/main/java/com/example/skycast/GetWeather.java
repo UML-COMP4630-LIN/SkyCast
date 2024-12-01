@@ -4,13 +4,14 @@ import android.util.Log;
 
 
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class GetWeather {
+public class GetWeather extends ViewModel {
     private static final String apiKey = "ebb181acd73164fc4439615127a01f5f";
     private MutableLiveData<String> currTemp = new MutableLiveData<>("");
     //need to makes these into MutuableLiveData Varaibles
@@ -64,6 +65,7 @@ public class GetWeather {
     }
     public void getData(String city) {
         // Set up the API call and try to connect
+        Log.d("Get Data", city);
         WeatherAPI myAPICall = RetrofitClient.getRetrofitInstance().create(WeatherAPI.class);
         Call<WeatherData> call = myAPICall.getData(city, apiKey);
         call.enqueue(new Callback<WeatherData>() {
