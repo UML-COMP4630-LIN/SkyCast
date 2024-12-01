@@ -13,29 +13,29 @@ import retrofit2.Retrofit;
 public class GetWeather {
     private static final String apiKey = "ebb181acd73164fc4439615127a01f5f";
     private MutableLiveData<String> currTemp = new MutableLiveData<>("");
-    //need to makes these into MutuableLivezData Varaibles
-    private String lowTemp;
-    private String highTemp;
-    private String feels_like;
-    private String humidity;
-    private long sunset;
-    private long sunrise;
-    private String main;
-    private String description;
-    private String speed;
-    public String getSpeed() {
+    //need to makes these into MutuableLiveData Varaibles
+    private MutableLiveData<String> lowTemp =  new MutableLiveData<>("");
+    private MutableLiveData<String> highTemp =  new MutableLiveData<>("");
+    private MutableLiveData<String> feels_like =  new MutableLiveData<>("");
+    private MutableLiveData<String> humidity =  new MutableLiveData<>("");
+    private MutableLiveData<Long> sunset = new MutableLiveData<>();
+    private MutableLiveData<Long> sunrise = new MutableLiveData<>();
+    private MutableLiveData<String> main = new MutableLiveData<>("");
+    private MutableLiveData<String> description = new MutableLiveData<>("");
+    private MutableLiveData<String> speed = new MutableLiveData<>("");
+    public MutableLiveData<String> getSpeed() {
         return speed;
     }
-    public String getDescription() {
+    public MutableLiveData<String> getDescription() {
         return description;
     }
-    public String getMain() {
+    public MutableLiveData<String> getMain() {
         return main;
     }
-    public long getSunset() {
+    public MutableLiveData<Long> getSunset() {
         return sunset;
     }
-    public long getSunrise() {
+    public MutableLiveData<Long> getSunrise() {
         return sunrise;
     }
 
@@ -43,19 +43,19 @@ public class GetWeather {
         return currTemp;
     }
 
-    public String getLowTemp() {
+    public MutableLiveData<String> getLowTemp() {
         return lowTemp;
     }
 
-    public String getHighTemp() {
+    public MutableLiveData<String> getHighTemp() {
         return highTemp;
     }
 
-    public String getFeels_like() {
+    public MutableLiveData<String> getFeels_like() {
         return feels_like;
     }
 
-    public String getHumidity() {
+    public MutableLiveData<String> getHumidity() {
         return humidity;
     }
 
@@ -74,14 +74,15 @@ public class GetWeather {
                     WeatherData weatherData = response.body();
                     //place all the JSON values from Weather Data into this classes Variables
                     currTemp.setValue(convertKelvinToFahrenheit(weatherData.getMain().getTemp()) + " F°") ;
-                    lowTemp = convertKelvinToFahrenheit(weatherData.getMain().getTempMin());
-                    highTemp = convertKelvinToFahrenheit(weatherData.getMain().getTempMax());
-                    humidity = String.valueOf(weatherData.getMain().getHumidity());
-                    speed = String.valueOf(weatherData.getWind().getSpeed());
-                    sunrise = weatherData.getSys().getSunrise();
-                    sunset = weatherData.getSys().getSunset();
-                    main = weatherData.getWeather().get(0).getMain();
-                    description = weatherData.getWeather().get(0).getDescription();
+                    lowTemp.setValue(convertKelvinToFahrenheit(weatherData.getMain().getTempMin()) + " F°");
+                    highTemp.setValue(convertKelvinToFahrenheit(weatherData.getMain().getTempMax()) +  " F°");
+                    humidity.setValue(String.valueOf(weatherData.getMain().getHumidity()));
+                    speed.setValue(String.valueOf(weatherData.getWind().getSpeed()));
+                    sunrise.setValue(weatherData.getSys().getSunrise());
+                    sunset.setValue(weatherData.getSys().getSunset());
+                    feels_like.setValue(String.valueOf(weatherData.getMain().getFeelsLike()));
+                    main.setValue(weatherData.getWeather().get(0).getMain());
+                    description.setValue(weatherData.getWeather().get(0).getDescription());
 
                     Log.d("Weather Info", "Temp: " + currTemp);
 

@@ -19,7 +19,7 @@ import retrofit2.Retrofit;
 public class WeatherFragment extends Fragment {
     private FragmentWeatherBinding binding;
     private String city;
-
+    private String tempRangeString;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,6 +31,9 @@ public class WeatherFragment extends Fragment {
         city = WeatherFragmentArgs.fromBundle(requireArguments()).getCity();
 
         TextView currentTemp = binding.currentTemp;
+        TextView windSpeed = binding.windSpeed;
+        TextView feelsLike = binding.feelsLike;
+        TextView tempRange = binding.TempRange;
         TextView cityName = binding.cityName;
         cityName.setText(city);
 
@@ -47,6 +50,32 @@ public class WeatherFragment extends Fragment {
             }
         });
 
+        getWeather.getLowTemp().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                tempRangeString = s;
+            }
+        });
+        getWeather.getHighTemp().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                tempRangeString += "- " + s;
+                tempRange.setText(tempRangeString);
+            }
+        });
+
+        getWeather.getFeels_like().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                feelsLike.setText(s);
+            }
+        });
+        getWeather.getSpeed().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                windSpeed.setText(s);
+            }
+        });
         //need the rest of the Observe for the other member variables in getWeather class
 
 
