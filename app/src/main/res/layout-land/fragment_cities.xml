@@ -9,7 +9,7 @@
     <!-- Top Image -->
     <ImageView
         android:id="@+id/skylineImage"
-        android:layout_width="250sp"
+        android:layout_width="0sp"
         android:layout_height="match_parent"
         android:src="@drawable/empire_state"
         app:layout_constraintStart_toStartOf="parent"
