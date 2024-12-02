@@ -8,14 +8,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder> {
 
-    private List<City> cityList;
+    private final List<City> cityList;
+    private final CityViewModel cityViewModel;
 
-    public CityAdapter(List<City> cityList) {
+    public CityAdapter(List<City> cityList, CityViewModel cityViewModel) {
         this.cityList = cityList;
+        this.cityViewModel = cityViewModel;
+        updateSelectedCitiesInViewModel();
     }
 
     @NonNull
@@ -34,15 +39,24 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
 
         holder.cityCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             city.setChecked(isChecked);
-            Toast.makeText(buttonView.getContext(),
-                    city.getName() + " is " + (isChecked ? "checked" : "unchecked"),
-                    Toast.LENGTH_SHORT).show();
+            updateSelectedCitiesInViewModel();
         });
     }
 
     @Override
     public int getItemCount() {
         return cityList.size();
+    }
+
+    private void updateSelectedCitiesInViewModel() {
+        List<City> selectedCities = new ArrayList<>();
+        for (City city : cityList) {
+            if (city.isChecked()) {
+                selectedCities.add(city);
+            }
+        }
+
+        cityViewModel.setSelectedCities(selectedCities);
     }
 
     public static class CityViewHolder extends RecyclerView.ViewHolder {

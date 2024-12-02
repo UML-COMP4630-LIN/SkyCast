@@ -66,7 +66,7 @@ dependencies {
     // Testing Navigation
     androidTestImplementation("androidx.navigation:navigation-testing:$nav_version")
 
-    // Jetpack Compose Integration (if using Jetpack Compose)
+    // Jetpack Compose Integration
     implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
@@ -75,7 +75,6 @@ dependencies {
 
 
 
-    // Check if this needs to be removed
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation ("de.hdodenhof:circleimageview:3.1.0")
 

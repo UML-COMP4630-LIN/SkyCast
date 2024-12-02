@@ -49,20 +49,8 @@ public class CitiesFragment extends Fragment {
         setLayoutManager();
 
         // Set up the adapter for RecyclerView
-        cityAdapter = new CityAdapter(cityList);
+        cityAdapter = new CityAdapter(cityList, cityViewModel);
         binding.cityListRecycler.setAdapter(cityAdapter);
-
-        // Update the ViewModel whenever cities are modified
-        binding.saveButton.setOnClickListener(v -> {
-            List<City> selectedCities = new ArrayList<>();
-            for (City city : cityList) {
-                if (city.isChecked()) {
-                    selectedCities.add(city);
-                    Snackbar.make(v, "Checked Cities Added", Snackbar.LENGTH_SHORT).show();
-                }
-            }
-            cityViewModel.setSelectedCities(selectedCities); // Update the ViewModel
-        });
 
         return view;
     }
