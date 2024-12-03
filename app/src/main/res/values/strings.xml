@@ -9,13 +9,23 @@
     <string name="helpIntro">Welcome to SkyCast! This guide will cover key features of the app and
     navigation directions. Scroll to a specific section for details. Happy Scrolling!</string>
     <string name="helpSectionHeader_Main"> How to Use SkyCast </string>
+
     <string name="helpSectionText_Main1"> In the Home screen, you\'ll find a dropdown menu to select
         your preferred city. Press the \"LOAD\"</string>
     <string name="helpSectionText_Main2">
         button to obtain the latest weather information for
         that city. The app will fetch and display the current weather information for that city by
         displaying the weather icon and temperature using live data from our API.</string>
+
+    <string name="helpSectionText_Main_Landscape">
+        In the Home screen, you\'ll find a dropdown menu to select
+        your preferred city. Press the \"LOAD\" button to obtain the latest weather information for
+        that city. The app will fetch and display the current weather information for that city by
+        displaying the weather icon and temperature using live data from our API.
+    </string>
+
     <string name="citySectionHeader_Main"> Manage Your Favorite Locations </string>
+
     <string name="helpSectionText_City1">The City Fragment allows you to customize your weather
         experience by selecting the cities you care</string>
     <string name="helpSectionText_City2">
@@ -25,13 +35,29 @@
         wherever you go. Want to de-clutter your list? Just uncheck a city, and it will be removed
         from the Home Fragment dropdown. Tailor your weather app to your needs in just a few
         taps!</string>
+
+    <string name="helpSectionText_City_Landscape">The City Fragment allows you to customize your weather
+        experience by selecting the cities you care about most. Simply check the boxes next to your
+        preferred cities, and they\’ll be instantly added to the dropdown menu in the Home Fragment.
+        This makes it easy to quickly switch between locations and
+        </string>
+    <string name="helpSectionText_City_Landscape2">stay updated on the weather
+        wherever you go. Want to de-clutter your list? Just uncheck a city, and it will be removed
+        from the Home Fragment dropdown. Tailor your weather app to your needs in just a few
+        taps!</string>
+
     <string name="helpSectionHeader_Profile"> Want to Meet the Team? </string>
+
     <string name="helpSectionText_Profile1">  Get to know the minds behind the Weather App! The
         Profile Fragment introduces you to our team of</string>
     <string name="helpSectionText_Profile2"> passionate developers, designers, and
         innovators. Learn more about the team committed to delivering accurate and reliable weather
         updates by visiting our profile page. </string>
 
+    <string name="helpSectionText_Profile_Landscape"> Get to know the minds behind the Weather App! The
+        Profile Fragment introduces you to our team of passionate developers, designers, and
+        innovators. Learn more about the team committed to delivering accurate and reliable weather
+        updates by visiting our profile page. </string>
 
     <string-array name="static_city_list">
         <item>Select a city</item>
@@ -61,6 +87,12 @@
         integrating an API to fetch and display weather data and develop user-friendly interface.
     </string>
 
+    <string name="theo_desc_landscape">
+        Theodor Farag a Computer Science student passionate about building innovative and
+        user-centric applications. His role in SkyCast involves integrating an API to fetch and
+        display weather data and develop user-friendly interface.
+    </string>
+
     <string name="theodor_farag">Theodor Farag</string>
     <string name="angelos_boules">Angelos Boules</string>
     <string name="angelos_description1">
@@ -71,6 +103,12 @@
     <string name="angelos_description2">
          responsible for developing the back-end core logic and functionality. He also assists with
         designing the user interface.
+    </string>
+
+    <string name="angelos_desc_landscape">
+        Angelos Boules is a Computer Science student with a passion for back-end development
+        and problem-solving. He is responsible for developing the back-end core logic and
+        functionality. He also assists with designing the user interface.
     </string>
 
     <string name="afsa_nafe">Afsa Nafe</string>
@@ -85,8 +123,14 @@
         user-friendly interface. His animations and design bring the
         app’s features to life.
     </string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name = "afsa_desc_landscape">
+        Afsa Nafe is a dedicated Computer Science student with a passion for user interface design
+        and front-end development. As the lead for the UI of SkyCast, he is responsible for creating
+        a visually appealing, and user-friendly interface. His animations and design bring the
+        app’s features to life.
+    </string>
+
     <string name="feels_like">Feels Like</string>
     <string name="wind_speed">Wind Speed</string>
     <string name="string_value">%s</string>

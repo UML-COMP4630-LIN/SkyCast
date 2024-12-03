@@ -29,11 +29,6 @@ public class MainActivity extends AppCompatActivity {
         // Set up the MaterialToolbar as the app bar
         setSupportActionBar(binding.toolbar);
 
-        // Clear the default app name title from the Toolbar
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-        }
-
         // Set up NavController
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(binding.navHostFragment.getId());
@@ -44,8 +39,13 @@ public class MainActivity extends AppCompatActivity {
                 R.id.homeFragment, R.id.citiesFragment, R.id.profileFragment
         ).build();
 
-        // Link the toolbar with the NavController
+        // Link the toolbar with the NavController (without automatic title updates)
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
+        // Disable automatic title updates and set app title manually
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            getSupportActionBar().setTitle(R.string.app_name);
+        });
 
         // Set up BottomNavigationView with the NavController
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController);

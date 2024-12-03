@@ -14,6 +14,8 @@
         android:layout_height="wrap_content"
         android:text="@string/welcomeSign"
         android:textSize="30sp"
+        android:fontFamily="@font/quicksand"
+        android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_margin="20dp"
         android:gravity="center_horizontal"/>
