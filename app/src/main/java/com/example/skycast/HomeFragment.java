@@ -2,6 +2,7 @@ package com.example.skycast;
 
 import android.animation.ValueAnimator;
 import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 
@@ -18,6 +19,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -51,6 +53,11 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        //Rain Animation
+        ImageView rainAnimationView = binding.rainAnimationView;
+        AnimationDrawable rainAnimation = (AnimationDrawable) rainAnimationView.getDrawable();
+        rainAnimation.start();
+
         // Load the gradient background
         gradientDrawable = (GradientDrawable) ContextCompat.getDrawable(requireContext(), R.drawable.gradient_background);
 
@@ -76,6 +83,9 @@ public class HomeFragment extends Fragment {
                 } else if (currentImage.equals("cloudtransition")) {
                     binding.lightningbolt.startAnimation(fadeOut);
                     binding.lightningcloud.startAnimation(fadeOut);
+                } else if (currentImage.equals("rain")) {
+                    binding.rainAnimationView.startAnimation(fadeOut);
+                    binding.lightningcloud.startAnimation(fadeOut);
                 }
             }
 
@@ -92,21 +102,32 @@ public class HomeFragment extends Fragment {
                 // Handle state transitions
                 handleStateTransition();
 
-                // Start fade-in animation and apply grow-shrink animations
+                // Start the fade-in animation and shrink animations
                 if (currentImage.equals("cloudandsun") || currentImage.equals("thunder")) {
                     binding.weatherIconImage.setVisibility(View.VISIBLE);
+                    binding.rainAnimationView.setVisibility(View.INVISIBLE);
                     binding.lightningcloud.setVisibility(View.INVISIBLE);
                     binding.lightningbolt.setVisibility(View.INVISIBLE);
                     binding.weatherIconImage.startAnimation(fadeIn);
                     binding.weatherIconImage.startAnimation(growShrinkAnimation);
                 } else if (currentImage.equals("cloudtransition")) {
                     binding.weatherIconImage.setVisibility(View.INVISIBLE);
+                    binding.rainAnimationView.setVisibility(View.INVISIBLE);
                     binding.lightningcloud.setVisibility(View.VISIBLE);
                     binding.lightningbolt.setVisibility(View.VISIBLE);
                     binding.lightningcloud.startAnimation(fadeIn);
                     binding.lightningbolt.startAnimation(fadeIn);
                     binding.lightningcloud.startAnimation(growShrinkAnimation);
                     binding.lightningbolt.startAnimation(growShrinkAnimation);
+                }else if (currentImage.equals("rain")) {
+                    binding.weatherIconImage.setVisibility(View.INVISIBLE);
+                    binding.rainAnimationView.setVisibility(View.VISIBLE);
+                    binding.lightningcloud.setVisibility(View.VISIBLE);
+                    binding.lightningbolt.setVisibility(View.INVISIBLE);
+                    binding.lightningcloud.startAnimation(fadeIn);
+                    binding.rainAnimationView.startAnimation(fadeIn);
+                    binding.lightningcloud.startAnimation(growShrinkAnimation);
+                    binding.rainAnimationView.startAnimation(growShrinkAnimation);
                 }
             }
 
@@ -174,9 +195,13 @@ public class HomeFragment extends Fragment {
 
             case "thunder":
                 binding.weatherIconImage.setImageResource(R.drawable.cloudandsun);
+                Log.d("StateTransition", "Transitioning to rain");
+                currentImage = "rain";
+                break;
+            case "rain":
+                binding.weatherIconImage.setImageResource(R.drawable.cloudandsun);
                 Log.d("StateTransition", "Transitioning to cloudandsun");
                 currentImage = "cloudandsun";
-                break;
         }
     }
 
@@ -194,7 +219,7 @@ public class HomeFragment extends Fragment {
         };
 
         ValueAnimator colorAnimator = ValueAnimator.ofFloat(0, colors.length - 1);
-        colorAnimator.setDuration(5000); // 5 seconds for the full cycle
+        colorAnimator.setDuration(10000); // 5 seconds for the full cycle
         colorAnimator.setRepeatMode(ValueAnimator.REVERSE);
         colorAnimator.setRepeatCount(ValueAnimator.INFINITE);
 

@@ -84,4 +84,16 @@ and buttons/images for interactive weather displays.
         android:layout_margin="20dp"
         android:visibility="invisible" />
 
+    <!-- Rain Animation Image Section -->
+    <ImageView
+        android:id="@+id/rainAnimationView"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_margin="20dp"
+        android:src="@drawable/rain_animation"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/selectCitySpinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
