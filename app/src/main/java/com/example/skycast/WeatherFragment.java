@@ -68,6 +68,8 @@ public class WeatherFragment extends Fragment {
                     temp = convertKelvinToFahrenheit(getWeather.getLowTemp().getValue()) + "- " + convertKelvinToFahrenheit(getWeather.getHighTemp().getValue());
                     tempRange.setText(temp);
                     feelsLike.setText(convertKelvinToFahrenheit(getWeather.getFeels_like().getValue()));
+                    windSpeed.setText(meterPerSecondToFeetPerSecond(getWeather.getSpeed().getValue()));
+
                 }
             }
         });
