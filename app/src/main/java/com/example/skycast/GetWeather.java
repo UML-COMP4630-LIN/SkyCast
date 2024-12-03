@@ -13,18 +13,19 @@ import retrofit2.Retrofit;
 
 public class GetWeather extends ViewModel {
     private static final String apiKey = "ebb181acd73164fc4439615127a01f5f";
-    private MutableLiveData<String> currTemp = new MutableLiveData<>("");
+    private MutableLiveData<Boolean> isMetric = new MutableLiveData<>(true);
+    private MutableLiveData<Double> currTemp = new MutableLiveData<>(0.);
     //need to makes these into MutuableLiveData Varaibles
-    private MutableLiveData<String> lowTemp =  new MutableLiveData<>("");
-    private MutableLiveData<String> highTemp =  new MutableLiveData<>("");
-    private MutableLiveData<String> feels_like =  new MutableLiveData<>("");
-    private MutableLiveData<String> humidity =  new MutableLiveData<>("");
+    private MutableLiveData<Double> lowTemp =  new MutableLiveData<>(0.);
+    private MutableLiveData<Double> highTemp =  new MutableLiveData<>(0.);
+    private MutableLiveData<Double> feels_like =  new MutableLiveData<>(0.);
+    private MutableLiveData<Long> humidity =  new MutableLiveData<>();
     private MutableLiveData<Long> sunset = new MutableLiveData<>();
     private MutableLiveData<Long> sunrise = new MutableLiveData<>();
     private MutableLiveData<String> main = new MutableLiveData<>("");
     private MutableLiveData<String> description = new MutableLiveData<>("");
-    private MutableLiveData<String> speed = new MutableLiveData<>("");
-    public MutableLiveData<String> getSpeed() {
+    private MutableLiveData<Double> speed = new MutableLiveData<>(0.);
+    public MutableLiveData<Double> getSpeed() {
         return speed;
     }
     public MutableLiveData<String> getDescription() {
@@ -40,29 +41,34 @@ public class GetWeather extends ViewModel {
         return sunrise;
     }
 
-    public MutableLiveData<String> getCurrTemp() {
+    public MutableLiveData<Double> getCurrTemp() {
         return currTemp;
     }
 
-    public MutableLiveData<String> getLowTemp() {
+    public MutableLiveData<Double> getLowTemp() {
         return lowTemp;
     }
 
-    public MutableLiveData<String> getHighTemp() {
+    public MutableLiveData<Double> getHighTemp() {
         return highTemp;
     }
 
-    public MutableLiveData<String> getFeels_like() {
+    public MutableLiveData<Double> getFeels_like() {
         return feels_like;
     }
 
-    public MutableLiveData<String> getHumidity() {
+    public MutableLiveData<Long> getHumidity() {
         return humidity;
     }
 
-    private String convertKelvinToFahrenheit(double kelvin) {
-        return String.format("%.1f", (kelvin - 273.15) * 9 / 5 + 32);
+    public MutableLiveData<Boolean> getIsMetric() {
+        return isMetric;
     }
+    public void setIsMetric(Boolean val) {
+        isMetric.setValue(val);
+    }
+
+
     public void getData(String city) {
         // Set up the API call and try to connect
         Log.d("Get Data", city);
@@ -75,14 +81,14 @@ public class GetWeather extends ViewModel {
                 if (response.isSuccessful() && response.body() != null) {
                     WeatherData weatherData = response.body();
                     //place all the JSON values from Weather Data into this classes Variables
-                    currTemp.setValue(convertKelvinToFahrenheit(weatherData.getMain().getTemp()) + " F°") ;
-                    lowTemp.setValue(convertKelvinToFahrenheit(weatherData.getMain().getTempMin()) + " F°");
-                    highTemp.setValue(convertKelvinToFahrenheit(weatherData.getMain().getTempMax()) +  " F°");
-                    humidity.setValue(String.valueOf(weatherData.getMain().getHumidity()));
-                    speed.setValue(String.valueOf(weatherData.getWind().getSpeed()));
+                    currTemp.setValue(weatherData.getMain().getTemp());
+                    lowTemp.setValue(weatherData.getMain().getTempMin());
+                    highTemp.setValue(weatherData.getMain().getTempMax());
+                    humidity.setValue(weatherData.getMain().getHumidity());
+                    speed.setValue(weatherData.getWind().getSpeed());
                     sunrise.setValue(weatherData.getSys().getSunrise());
                     sunset.setValue(weatherData.getSys().getSunset());
-                    feels_like.setValue(String.valueOf(weatherData.getMain().getFeelsLike()));
+                    feels_like.setValue(weatherData.getMain().getFeelsLike());
                     main.setValue(weatherData.getWeather().get(0).getMain());
                     description.setValue(weatherData.getWeather().get(0).getDescription());
 

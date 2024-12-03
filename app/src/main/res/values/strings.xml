@@ -88,6 +88,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="feels_like">Feels Like</string>
+    <string name="wind_speed">Wind Speed</string>
+    <string name="string_value">%s</string>
 
 
 </resources>
