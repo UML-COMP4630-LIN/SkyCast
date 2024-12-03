@@ -11,6 +11,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+/**
+ * GetWeather is a ViewModel class responsible for fetching weather data from an API
+ * and storing the weather details as MutableLiveData for UI updates.
+ */
+
 public class GetWeather extends ViewModel {
     private static final String apiKey = "ebb181acd73164fc4439615127a01f5f";
     private MutableLiveData<Boolean> isMetric = new MutableLiveData<>(true);
@@ -25,50 +30,120 @@ public class GetWeather extends ViewModel {
     private MutableLiveData<String> main = new MutableLiveData<>("");
     private MutableLiveData<String> description = new MutableLiveData<>("");
     private MutableLiveData<Double> speed = new MutableLiveData<>(0.);
+
+    /**
+     * Getter for wind speed.
+     *
+     * @return A MutableLiveData object containing the wind speed.
+     */
     public MutableLiveData<Double> getSpeed() {
         return speed;
     }
+
+    /**
+     * Getter for weather description.
+     *
+     * @return A MutableLiveData object containing the weather description.
+     */
     public MutableLiveData<String> getDescription() {
         return description;
     }
+
+    /**
+     * Getter for weather main condition.
+     *
+     * @return A MutableLiveData object containing the main weather condition.
+     */
     public MutableLiveData<String> getMain() {
         return main;
     }
+
+    /**
+     * Getter for sunset time.
+     *
+     * @return A MutableLiveData object containing the sunset time in UNIX timestamp.
+     */
     public MutableLiveData<Long> getSunset() {
         return sunset;
     }
+
+    /**
+     * Getter for sunrise time.
+     *
+     * @return A MutableLiveData object containing the sunrise time in UNIX timestamp.
+     */
     public MutableLiveData<Long> getSunrise() {
         return sunrise;
     }
 
+    /**
+     * Getter for the current temperature.
+     *
+     * @return A MutableLiveData object containing the current temperature.
+     */
     public MutableLiveData<Double> getCurrTemp() {
         return currTemp;
     }
 
+    /**
+     * Getter for the lowest temperature.
+     *
+     * @return A MutableLiveData object containing the lowest temperature.
+     */
     public MutableLiveData<Double> getLowTemp() {
         return lowTemp;
     }
 
+    /**
+     * Getter for the highest temperature.
+     *
+     * @return A MutableLiveData object containing the highest temperature.
+     */
     public MutableLiveData<Double> getHighTemp() {
         return highTemp;
     }
 
+    /**
+     * Getter for the "feels like" temperature.
+     *
+     * @return A MutableLiveData object containing the "feels like" temperature.
+     */
     public MutableLiveData<Double> getFeels_like() {
         return feels_like;
     }
 
+    /**
+     * Getter for humidity percentage.
+     *
+     * @return A MutableLiveData object containing the humidity percentage.
+     */
     public MutableLiveData<Long> getHumidity() {
         return humidity;
     }
 
+    /**
+     * Getter for metric system preference.
+     *
+     * @return A MutableLiveData object indicating whether metric units are used.
+     */
     public MutableLiveData<Boolean> getIsMetric() {
         return isMetric;
     }
+
+    /**
+     * Setter for metric system preference.
+     *
+     * @param val A boolean value indicating whether to use metric units.
+     */
     public void setIsMetric(Boolean val) {
         isMetric.setValue(val);
     }
 
-
+    /**
+     * Fetches weather data for a given city using an API call.
+     *
+     * @param city The name of the city for which weather data is to be fetched.
+     */
     public void getData(String city) {
         // Set up the API call and try to connect
         Log.d("Get Data", city);

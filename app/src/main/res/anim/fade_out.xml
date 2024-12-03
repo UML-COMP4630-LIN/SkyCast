@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+This XML file defines an alpha (fade-out) animation.
+transitions the alpha (opacity) of a view from fully opaque (1.0)
+to completely transparent (0.0) over a duration of 500 milliseconds.
+-->
 <alpha xmlns:android="http://schemas.android.com/apk/res/android"
     android:duration="500"
     android:fromAlpha="1.0"

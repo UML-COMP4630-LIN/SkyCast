@@ -18,11 +18,26 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * CitiesFragment is responsible for displaying a list of cities in a RecyclerView.
+ * It dynamically adjusts the layout based on the device orientation and saves
+ * the checked states of cities during configuration changes.
+ */
+
 public class CitiesFragment extends Fragment {
     private FragmentCitiesBinding binding;
     private CityAdapter cityAdapter;
     private List<City> cityList;
 
+
+    /**
+     * Called to initialize the fragment's UI and set up the RecyclerView.
+     *
+     * @param inflater           The LayoutInflater used to inflate views in the fragment.
+     * @param container          The container where the fragment's UI will be placed.
+     * @param savedInstanceState A Bundle containing the saved state of the fragment, if any.
+     * @return The root view of the fragment.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,6 +70,11 @@ public class CitiesFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Saves the checked states of the cities when the fragment's state is saved.
+     *
+     * @param state The Bundle where the state will be saved.
+     */
     @Override
     public void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);
@@ -67,12 +87,18 @@ public class CitiesFragment extends Fragment {
         state.putBooleanArray("cities_checked", checkedStates);
     }
 
+    /**
+     * Cleans up resources when the fragment's view is destroyed.
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null; // Avoid memory leaks
     }
 
+    /**
+     * Sets the appropriate layout manager for the RecyclerView based on device orientation.
+     */
     private void setLayoutManager() {
         // Determine the orientation of the device
         int orientation = getResources().getConfiguration().orientation;
@@ -86,6 +112,11 @@ public class CitiesFragment extends Fragment {
         }
     }
 
+    /**
+     * Creates and returns a predefined list of cities.
+     *
+     * @return A list of City objects.
+     */
     private List<City> getCities() {
         // Predefined list of cities
         List<City> cities = new ArrayList<>();

@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+Main layout for the app, containing a NavHostFragment for navigation,
+a BottomNavigationView for bottom menu navigation, and a MaterialToolbar as the top app bar.
+-->
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,7 +13,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!-- NavHostFragment to host navigation -->
+    <!-- NavHostFragment Section: Hosts navigation fragments as per the navigation graph -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -21,7 +26,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Bottom Navigation View -->
+    <!-- BottomNavigationView Section: Displays bottom menu for top-level navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
@@ -32,7 +37,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Material Toolbar (Top App Bar) -->
+    <!-- MaterialToolbar Section: Provides a top app bar for navigation and menu options -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -41,6 +46,5 @@
         android:backgroundTint="#FF000000"
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/top_app_bar_menu" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

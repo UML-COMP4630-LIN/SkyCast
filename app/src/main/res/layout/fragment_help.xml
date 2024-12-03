@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+This XML layout defines the UI for the HelpFragment in portrait orientation.
+It provides a scrollable view containing helpful information about different app sections,
+including Home, City, and Profile, along with relevant icons and descriptions.
+-->
+
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -6,13 +12,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/help_background"
-
     tools:context=".HelpFragment">
 
+    <!-- Root ConstraintLayout Section: Contains all the content in a scrollable layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- Help Introduction Section -->
         <TextView
             android:id="@+id/helpIntro"
             android:layout_width="match_parent"
@@ -29,6 +36,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Home Section -->
         <TextView
             android:id="@+id/homeSectionHeading"
             android:layout_width="match_parent"
@@ -93,6 +101,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/homeSectionText1" />
 
+        <!-- City Section -->
         <TextView
             android:id="@+id/citySectionHeader"
             android:layout_width="match_parent"
@@ -137,25 +146,7 @@
             app:layout_constraintStart_toEndOf="@id/cityIconHelp"
             app:layout_constraintTop_toBottomOf="@id/citySectionHeader" />
 
-        <TextView
-            android:id="@+id/citySectionText2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/quicksand"
-            android:justificationMode="inter_word"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:paddingBottom="10dp"
-            android:text="@string/helpSectionText_City2"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/citySectionText1" />
-
+        <!-- Profile Section -->
         <TextView
             android:id="@+id/profileSectionHeader"
             android:layout_width="match_parent"
@@ -199,25 +190,6 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/profileSectionHeader" />
-
-        <TextView
-            android:id="@+id/profileSectionText2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/quicksand"
-            android:justificationMode="inter_word"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:paddingBottom="10dp"
-            android:text="@string/helpSectionText_Profile2"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/profileSectionText1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

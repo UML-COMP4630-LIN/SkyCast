@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -27,19 +26,30 @@ import com.example.skycast.databinding.FragmentHomeBinding;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * HomeFragment is responsible for displaying the home screen of the app.
+ * It includes animations, dynamic backgrounds, and navigation to the weather fragment.
+ * It also observes the selected cities from the shared ViewModel and updates the UI accordingly.
+ */
 public class HomeFragment extends Fragment {
-    private String currentImage = "cloudandsun"; // Track the current image
+    private String currentImage = "cloudandsun"; // Track the current image state
     private GradientDrawable gradientDrawable;
 
     private FragmentHomeBinding binding;
 
+    /**
+     * Called to initialize the fragment's UI and set up animations, background, and data.
+     *
+     * @param inflater           The LayoutInflater used to inflate views in the fragment.
+     * @param container          The container where the fragment's UI will be placed.
+     * @param savedInstanceState A Bundle containing the saved state of the fragment, if any.
+     * @return The root view of the fragment.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-
-
 
         // Load the gradient background
         gradientDrawable = (GradientDrawable) ContextCompat.getDrawable(requireContext(), R.drawable.gradient_background);
@@ -60,7 +70,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                // Start fade-out based on current state
+                // Start fade-out based on the current image state
                 if (currentImage.equals("cloudandsun") || currentImage.equals("thunder")) {
                     binding.weatherIconImage.startAnimation(fadeOut);
                 } else if (currentImage.equals("cloudtransition")) {
@@ -82,7 +92,7 @@ public class HomeFragment extends Fragment {
                 // Handle state transitions
                 handleStateTransition();
 
-                // Start the fade-in animation and shrink animations
+                // Start fade-in animation and apply grow-shrink animations
                 if (currentImage.equals("cloudandsun") || currentImage.equals("thunder")) {
                     binding.weatherIconImage.setVisibility(View.VISIBLE);
                     binding.lightningcloud.setVisibility(View.INVISIBLE);
@@ -124,29 +134,31 @@ public class HomeFragment extends Fragment {
             binding.selectCitySpinner.setAdapter(adapter);
         });
 
-        // code for sending the selected city to the weather fragment
+        // Set up the weather button click listener to navigate to the WeatherFragment
         Button weatherButton = binding.generateweatherbutton;
         Spinner citiesSpinner = binding.selectCitySpinner;
 
         weatherButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // if the spinner is not empty then send the selected city
+                // Navigate to WeatherFragment if a city is selected
                 if (citiesSpinner.getAdapter().getCount() != 0) {
                     String selectedCity = citiesSpinner.getSelectedItem().toString();
                     HomeFragmentDirections.ActionHomeFragmentToWeatherFragment action = HomeFragmentDirections.actionHomeFragmentToWeatherFragment(selectedCity);
                     Navigation.findNavController(v).navigate(action);
                 } else {
-                    //error message check for the user of they have no selected cities
+                    // Show error message if no cities are selected
                     Toast.makeText(requireContext(), "Add Cities To your List", Toast.LENGTH_LONG).show();
                 }
             }
         });
 
-
         return view;
     }
 
+    /**
+     * Handles state transitions for the weather icon animations.
+     */
     private void handleStateTransition() {
         switch (currentImage) {
             case "cloudandsun":
@@ -168,11 +180,12 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    /**
+     * Animates the background gradient colors.
+     */
     private void animateBackground() {
-        // Retrieve the GradientDrawable from the root view's background
         GradientDrawable gradientDrawable = (GradientDrawable) binding.getRoot().getBackground();
 
-        // Define multiple colors for the animation
         int[] colors = {
                 Color.parseColor("#B3E0D6"), // Light blue
                 Color.parseColor("#FFA07A"), // Light orange
@@ -180,32 +193,35 @@ public class HomeFragment extends Fragment {
                 Color.parseColor("#87CEEB")  // Sky blue
         };
 
-        // Create a ValueAnimator to cycle through colors
         ValueAnimator colorAnimator = ValueAnimator.ofFloat(0, colors.length - 1);
         colorAnimator.setDuration(5000); // 5 seconds for the full cycle
         colorAnimator.setRepeatMode(ValueAnimator.REVERSE);
         colorAnimator.setRepeatCount(ValueAnimator.INFINITE);
 
         colorAnimator.addUpdateListener(animation -> {
-            // Get the current and next indices based on the animated fraction
             float animatedValue = (float) animation.getAnimatedValue();
             int startIndex = (int) Math.floor(animatedValue);
             int endIndex = (int) Math.ceil(animatedValue);
             float fraction = animatedValue - startIndex;
 
-            // Interpolate between the current and next color
             int startColor = colors[startIndex];
             int endColor = colors[endIndex];
             int interpolatedColor = interpolateColor(startColor, endColor, fraction);
 
-            // Update the gradient with the interpolated color
             gradientDrawable.setColors(new int[]{Color.WHITE, interpolatedColor});
         });
 
-        // Start the animation
         colorAnimator.start();
     }
 
+    /**
+     * Interpolates between two colors based on a fraction.
+     *
+     * @param startColor The starting color.
+     * @param endColor   The ending color.
+     * @param fraction   The fraction to interpolate.
+     * @return The interpolated color.
+     */
     private int interpolateColor(int startColor, int endColor, float fraction) {
         int startAlpha = (startColor >> 24) & 0xff;
         int startRed = (startColor >> 16) & 0xff;
@@ -225,10 +241,13 @@ public class HomeFragment extends Fragment {
         return (interpolatedAlpha << 24) | (interpolatedRed << 16) | (interpolatedGreen << 8) | interpolatedBlue;
     }
 
-
+    /**
+     * Cleans up resources when the fragment's view is destroyed.
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
+        binding = null
+        ;
     }
 }

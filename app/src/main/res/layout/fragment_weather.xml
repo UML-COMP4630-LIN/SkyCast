@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Switch to a control view that has image view and all the necessary designs-->
+<!--
+This XML layout defines the UI for the WeatherFragment.
+It includes a city name display, current weather details, wind information, and a button for additional actions.
+Each component is organized in a structured design using ConstraintLayout and CardView.
+-->
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,6 +13,7 @@
     android:layout_height="match_parent"
     tools:context=".WeatherFragment">
 
+    <!-- City Name Section -->
     <TextView
         android:id="@+id/cityName"
         android:layout_width="wrap_content"
@@ -20,7 +26,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
+    <!-- Current Weather Card Section -->
     <androidx.cardview.widget.CardView
         android:id="@+id/currentWeatherCard"
         android:layout_width="300dp"
@@ -70,6 +76,7 @@
 
     </androidx.cardview.widget.CardView>
 
+    <!-- Wind Information Card Section -->
     <androidx.cardview.widget.CardView
         android:id="@+id/windCard"
         android:layout_width="match_parent"
@@ -121,7 +128,6 @@
                     android:layout_height="wrap_content"
                     android:text="@string/string_value"
                     android:textSize="24sp"
-
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/feelsLike"
@@ -162,10 +168,10 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
+    <!-- Button Section -->
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
@@ -175,6 +181,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/windCard" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

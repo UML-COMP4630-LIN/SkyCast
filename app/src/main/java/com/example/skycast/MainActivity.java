@@ -13,11 +13,21 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.skycast.databinding.ActivityMainBinding;
 
+/**
+ * MainActivity is the entry point of the application and handles navigation
+ * between fragments, toolbar setup, and the bottom navigation menu.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private AppBarConfiguration appBarConfiguration;
 
+    /**
+     * Initializes the activity, sets up navigation components, and configures the app bar and
+     * bottom navigation.
+     *
+     * @param savedInstanceState A Bundle containing the saved state of the activity, if any.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +61,12 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController);
     }
 
+    /**
+     * Inflates the options menu in the toolbar.
+     *
+     * @param menu The options menu in which items are placed.
+     * @return True to display the menu.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the Top App Bar menu
@@ -58,6 +74,12 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Handles item selection from the options menu.
+     *
+     * @param item The selected menu item.
+     * @return True if the menu item was successfully handled.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Get the NavController
@@ -72,6 +94,11 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Handles the Up button navigation.
+     *
+     * @return True if navigation up was handled successfully.
+     */
     @Override
     public boolean onSupportNavigateUp() {
         // Handle Up button navigation

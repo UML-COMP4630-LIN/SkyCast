@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+This XML defines a menu item for the top app bar.
+It includes a single item for navigating to the HelpFragment, represented by a help icon and title.
+-->
+
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Help Menu Item -->
     <item
         android:id="@+id/helpFragment"
-        android:title="help"
+        android:title="Help"
         android:icon="@drawable/help_icon"
-        app:showAsAction="always"
-        />
+        app:showAsAction="always" />
+
 </menu>

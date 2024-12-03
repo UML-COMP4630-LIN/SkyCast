@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+This XML layout defines the UI for the ProfileFragment in landscape orientation.
+It features a scrollable view with a mission statement, profile headers, and detailed information
+about team members, including titles, images, and descriptions.
+-->
+
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,10 +14,12 @@
     android:background="@drawable/help_background"
     tools:context=".ProfileFragment">
 
+    <!-- Root ConstraintLayout Section -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Mission Statement Section -->
         <TextView
             android:id="@+id/mission_statement"
             android:layout_width="match_parent"
@@ -33,6 +41,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Header Section -->
         <TextView
             android:id="@+id/header"
             android:layout_width="wrap_content"
@@ -49,6 +58,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mission_statement" />
 
+        <!-- Theodor Farag Section -->
         <TextView
             android:id="@+id/theodor_title"
             android:layout_width="wrap_content"
@@ -70,7 +80,6 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
             android:layout_marginStart="30dp"
-
             android:src="@drawable/farag"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/theodor_title" />
@@ -81,19 +90,19 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="15dp"
-            android:layout_marginBottom = "15dp"
+            android:layout_marginBottom="15dp"
             android:layout_marginStart="20dp"
             android:justificationMode="inter_word"
             android:text="@string/theo_desc_landscape"
-            android:textSize = "20sp"
+            android:textSize="20sp"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:fontFamily="@font/quicksand"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/theodor_image"
             app:layout_constraintTop_toBottomOf="@id/theodor_title" />
 
+        <!-- Angelos Boules Section -->
         <TextView
             android:id="@+id/angelos_title"
             android:layout_width="wrap_content"
@@ -120,7 +129,6 @@
             app:layout_constraintStart_toEndOf="@id/angelos_description"
             app:layout_constraintTop_toBottomOf="@id/angelos_title" />
 
-
         <TextView
             android:id="@+id/angelos_description"
             android:layout_width="0dp"
@@ -129,7 +137,7 @@
             android:layout_marginEnd="20dp"
             android:justificationMode="inter_word"
             android:text="@string/angelos_desc_landscape"
-            android:textSize = "20sp"
+            android:textSize="20sp"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:fontFamily="@font/quicksand"
@@ -137,6 +145,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/angelos_title" />
 
+        <!-- Afsa Nafe Section -->
         <TextView
             android:id="@+id/afsa_title"
             android:layout_width="wrap_content"
@@ -170,20 +179,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="15dp"
-            android:layout_marginBottom = "15dp"
+            android:layout_marginBottom="15dp"
             android:paddingBottom="15sp"
             android:layout_marginStart="20dp"
             android:justificationMode="inter_word"
             android:text="@string/afsa_desc_landscape"
-            android:textSize = "20sp"
+            android:textSize="20sp"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:fontFamily="@font/quicksand"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/afsa_image"
             app:layout_constraintTop_toBottomOf="@id/afsa_title" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

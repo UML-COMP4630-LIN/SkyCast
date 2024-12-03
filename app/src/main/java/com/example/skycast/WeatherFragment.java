@@ -14,148 +14,165 @@ import android.widget.TextView;
 
 import com.example.skycast.databinding.FragmentWeatherBinding;
 
-
+/**
+ * WeatherFragment is responsible for displaying the current weather details for a selected city.
+ * It observes the weather data from the GetWeather ViewModel and updates the UI dynamically.
+ */
 public class WeatherFragment extends Fragment {
     private FragmentWeatherBinding binding;
     private String city;
     private String tempRangeString;
 
+    /**
+     * Called to create and return the view hierarchy for the fragment.
+     *
+     * @param inflater           The LayoutInflater object used to inflate views in the fragment.
+     * @param container          The parent ViewGroup that the fragment's UI will be attached to.
+     * @param savedInstanceState A Bundle containing the saved state of the fragment, if any.
+     * @return The root view of the weather fragment.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentWeatherBinding.inflate(inflater,container, false);
+        binding = FragmentWeatherBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        //obtain the city String and then ensuring its valid for the api call
+        // Obtain the city name from arguments and set it in the UI
         city = WeatherFragmentArgs.fromBundle(requireArguments()).getCity();
+        binding.cityName.setText(city);
 
         TextView currentTemp = binding.currentTemp;
         TextView windSpeed = binding.windSpeed;
         TextView feelsLike = binding.feelsLike;
         TextView tempRange = binding.TempRange;
-        TextView cityName = binding.cityName;
         Button metricConvertor = binding.button;
-        cityName.setText(city);
 
-
+        // Initialize the GetWeather ViewModel
         GetWeather getWeather = new ViewModelProvider(requireActivity()).get(GetWeather.class);
-        getWeather.getData(city);
+        getWeather.getData(city); // Fetch weather data for the selected city
 
-        metricConvertor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Boolean temp = new Boolean(!getWeather.getIsMetric().getValue());
-                getWeather.setIsMetric(temp);
+        // Toggle between metric and imperial units when the button is clicked
+        metricConvertor.setOnClickListener(v -> {
+            boolean isMetric = !getWeather.getIsMetric().getValue();
+            getWeather.setIsMetric(isMetric);
+        });
 
+        // Observe changes to the unit system and update the UI accordingly
+        getWeather.getIsMetric().observe(getViewLifecycleOwner(), isMetric -> {
+            if (isMetric) {
+                metricConvertor.setText("CONVERT TO IMPERIAL");
+                updateWeatherUI(getWeather, true, currentTemp, tempRange, feelsLike, windSpeed);
+            } else {
+                metricConvertor.setText("CONVERT TO METRIC");
+                updateWeatherUI(getWeather, false, currentTemp, tempRange, feelsLike, windSpeed);
             }
         });
 
-        getWeather.getIsMetric().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                if (aBoolean) {
-                    metricConvertor.setText("CONVERT TO IMPERIAL");
-                    String temp;
-                    currentTemp.setText(convertKelvinToCelsius(getWeather.getCurrTemp().getValue()));
-                    temp = convertKelvinToCelsius(getWeather.getLowTemp().getValue()) + "- " + convertKelvinToCelsius(getWeather.getHighTemp().getValue());
-                    tempRange.setText(temp);
-                    feelsLike.setText(convertKelvinToCelsius(getWeather.getFeels_like().getValue()));
-                    windSpeed.setText(String.valueOf(getWeather.getSpeed().getValue()) + " m/s");
-                } else {
-                    metricConvertor.setText("CONVERT TO METRIC");
-                    String temp;
-                    currentTemp.setText(convertKelvinToFahrenheit(getWeather.getCurrTemp().getValue()));
-                    temp = convertKelvinToFahrenheit(getWeather.getLowTemp().getValue()) + "- " + convertKelvinToFahrenheit(getWeather.getHighTemp().getValue());
-                    tempRange.setText(temp);
-                    feelsLike.setText(convertKelvinToFahrenheit(getWeather.getFeels_like().getValue()));
-                    windSpeed.setText(meterPerSecondToFeetPerSecond(getWeather.getSpeed().getValue()));
+        // Observe specific weather data changes and update the UI dynamically
+        observeWeatherData(getWeather, currentTemp, tempRange, feelsLike, windSpeed);
 
-                }
-            }
-        });
-
-        //Observe implementation example
-        getWeather.getCurrTemp().observe(getViewLifecycleOwner(), new Observer<Double>() {
-            @Override
-            public void onChanged(Double s) {
-                String temp = getWeather.getIsMetric().getValue()? convertKelvinToCelsius(s):convertKelvinToFahrenheit(s);
-                currentTemp.setText(temp);
-            }
-        });
-
-        getWeather.getLowTemp().observe(getViewLifecycleOwner(), new Observer<Double>() {
-            @Override
-            public void onChanged(Double s) {
-                tempRangeString = getWeather.getIsMetric().getValue()? convertKelvinToCelsius(s):convertKelvinToFahrenheit(s);
-            }
-        });
-        getWeather.getHighTemp().observe(getViewLifecycleOwner(), new Observer<Double>() {
-            @Override
-            public void onChanged(Double s) {
-                String temp = getWeather.getIsMetric().getValue()? convertKelvinToCelsius(s):convertKelvinToFahrenheit(s);
-                tempRangeString += "- " + temp;
-                tempRange.setText(tempRangeString);
-            }
-        });
-
-        getWeather.getFeels_like().observe(getViewLifecycleOwner(), new Observer<Double>() {
-            @Override
-            public void onChanged(Double s) {
-                String temp = getWeather.getIsMetric().getValue()? convertKelvinToCelsius(s):convertKelvinToFahrenheit(s);
-                feelsLike.setText(temp);
-            }
-        });
-        getWeather.getSpeed().observe(getViewLifecycleOwner(), new Observer<Double>() {
-            @Override
-            public void onChanged(Double s) {
-                String temp = getWeather.getIsMetric().getValue()? String.valueOf(s) + " m/s":meterPerSecondToFeetPerSecond(s);
-                windSpeed.setText(temp);
-            }
-        });
-
-        getWeather.getDescription().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                // update UI that contains weather description
-            }
-        });
-
-        getWeather.getMain().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                // update the imageView based on the description
-            }
-        });
-
-        getWeather.getSunrise().observe(getViewLifecycleOwner(), new Observer<Long>() {
-            @Override
-            public void onChanged(Long aLong) {
-                //update UI for sunrise value
-            }
-        });
-        getWeather.getSunset().observe(getViewLifecycleOwner(), new Observer<Long>() {
-            @Override
-            public void onChanged(Long aLong) {
-                    // update UI for sunset value
-            }
-        });
-
-
-        // Inflate the layout for this fragment
         return view;
     }
 
+    /**
+     * Updates the UI elements with weather data based on the selected unit system.
+     *
+     * @param getWeather  The ViewModel providing weather data.
+     * @param isMetric    True if metric units should be used, false otherwise.
+     * @param currentTemp The TextView for displaying the current temperature.
+     * @param tempRange   The TextView for displaying the temperature range.
+     * @param feelsLike   The TextView for displaying the "feels like" temperature.
+     * @param windSpeed   The TextView for displaying the wind speed.
+     */
+    private void updateWeatherUI(GetWeather getWeather, boolean isMetric,
+                                 TextView currentTemp, TextView tempRange,
+                                 TextView feelsLike, TextView windSpeed) {
+        if (isMetric) {
+            currentTemp.setText(convertKelvinToCelsius(getWeather.getCurrTemp().getValue()));
+            tempRange.setText(convertKelvinToCelsius(getWeather.getLowTemp().getValue()) + "- " +
+                    convertKelvinToCelsius(getWeather.getHighTemp().getValue()));
+            feelsLike.setText(convertKelvinToCelsius(getWeather.getFeels_like().getValue()));
+            windSpeed.setText(getWeather.getSpeed().getValue() + " m/s");
+        } else {
+            currentTemp.setText(convertKelvinToFahrenheit(getWeather.getCurrTemp().getValue()));
+            tempRange.setText(convertKelvinToFahrenheit(getWeather.getLowTemp().getValue()) + "- " +
+                    convertKelvinToFahrenheit(getWeather.getHighTemp().getValue()));
+            feelsLike.setText(convertKelvinToFahrenheit(getWeather.getFeels_like().getValue()));
+            windSpeed.setText(meterPerSecondToFeetPerSecond(getWeather.getSpeed().getValue()));
+        }
+    }
+
+    /**
+     * Observes specific weather data fields and updates the UI dynamically.
+     *
+     * @param getWeather  The ViewModel providing weather data.
+     * @param currentTemp The TextView for displaying the current temperature.
+     * @param tempRange   The TextView for displaying the temperature range.
+     * @param feelsLike   The TextView for displaying the "feels like" temperature.
+     * @param windSpeed   The TextView for displaying the wind speed.
+     */
+    private void observeWeatherData(GetWeather getWeather, TextView currentTemp,
+                                    TextView tempRange, TextView feelsLike, TextView windSpeed) {
+        getWeather.getCurrTemp().observe(getViewLifecycleOwner(), temp ->
+                currentTemp.setText(getWeather.getIsMetric().getValue() ?
+                        convertKelvinToCelsius(temp) : convertKelvinToFahrenheit(temp))
+        );
+
+        getWeather.getLowTemp().observe(getViewLifecycleOwner(), lowTemp -> {
+            tempRangeString = getWeather.getIsMetric().getValue() ?
+                    convertKelvinToCelsius(lowTemp) : convertKelvinToFahrenheit(lowTemp);
+        });
+
+        getWeather.getHighTemp().observe(getViewLifecycleOwner(), highTemp -> {
+            tempRangeString += "- " + (getWeather.getIsMetric().getValue() ?
+                    convertKelvinToCelsius(highTemp) : convertKelvinToFahrenheit(highTemp));
+            tempRange.setText(tempRangeString);
+        });
+
+        getWeather.getFeels_like().observe(getViewLifecycleOwner(), feels ->
+                feelsLike.setText(getWeather.getIsMetric().getValue() ?
+                        convertKelvinToCelsius(feels) : convertKelvinToFahrenheit(feels))
+        );
+
+        getWeather.getSpeed().observe(getViewLifecycleOwner(), speed ->
+                windSpeed.setText(getWeather.getIsMetric().getValue() ?
+                        speed + " m/s" : meterPerSecondToFeetPerSecond(speed))
+        );
+    }
+
+    /**
+     * Converts a temperature from Kelvin to Fahrenheit.
+     *
+     * @param kelvin The temperature in Kelvin.
+     * @return The temperature in Fahrenheit as a formatted string.
+     */
     private String convertKelvinToFahrenheit(double kelvin) {
         return String.format("%.1f", (kelvin - 273.15) * 9 / 5 + 32) + " F°";
     }
 
+    /**
+     * Converts a temperature from Kelvin to Celsius.
+     *
+     * @param kelvin The temperature in Kelvin.
+     * @return The temperature in Celsius as a formatted string.
+     */
     private String convertKelvinToCelsius(double kelvin) {
         return String.format("%.1f", kelvin - 273.15) + " °C";
     }
+
+    /**
+     * Converts a speed from meters per second to feet per second.
+     *
+     * @param value The speed in meters per second.
+     * @return The speed in feet per second as a formatted string.
+     */
     private String meterPerSecondToFeetPerSecond(Double value) {
         return String.format("%.1f", value * 3.28084) + " ft/s";
     }
 
+    /**
+     * Cleans up resources when the fragment's view is destroyed.
+     */
     @Override
     public void onDestroyView() {
         super.onDestroyView();

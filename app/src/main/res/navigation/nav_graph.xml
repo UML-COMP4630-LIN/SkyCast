@@ -1,43 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+This XML defines the navigation graph for the application.
+It specifies the app's navigation structure, including fragments and their relationships (actions).
+The start destination is set to the HomeFragment.
+-->
+
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
 
+    <!-- Home Fragment -->
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.skycast.HomeFragment"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_weatherFragment"
             app:destination="@id/weatherFragment" />
     </fragment>
+
+    <!-- Cities Fragment -->
     <fragment
         android:id="@+id/citiesFragment"
         android:name="com.example.skycast.CitiesFragment"
-        tools:layout="@layout/fragment_cities" >
+        tools:layout="@layout/fragment_cities">
         <action
             android:id="@+id/action_citiesFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
 
+    <!-- Help Fragment -->
     <fragment
         android:id="@+id/helpFragment"
         android:name="com.example.skycast.HelpFragment"
         tools:layout="@layout/fragment_help" />
+
+    <!-- Profile Fragment -->
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.skycast.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+
+    <!-- Weather Fragment -->
     <fragment
         android:id="@+id/weatherFragment"
         android:name="com.example.skycast.WeatherFragment"
         android:label="fragment_weather"
-        tools:layout="@layout/fragment_weather" >
+        tools:layout="@layout/fragment_weather">
         <argument
             android:name="city"
             app:argType="string" />
     </fragment>
+
 </navigation>

@@ -1,12 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This XML layout defines the UI for the CitiesFragment in landscape orientation.
+It features a top image displayed on the left side and a RecyclerView for the city list on the right.
+-->
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/city_background"
     tools:context=".CitiesFragment">
 
-    <!-- Top Image -->
+    <!-- Top Image Section: Displays an empire state image on the left side -->
     <ImageView
         android:id="@+id/skylineImage"
         android:layout_width="0sp"
@@ -15,14 +21,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- RecyclerView -->
+    <!-- RecyclerView Section: Displays a scrollable list of cities on the right side -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cityListRecycler"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/skylineImage"
+        app:layout_constraintStart_toEndOf="@id/skylineImage"
         app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
