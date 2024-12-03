@@ -161,7 +161,7 @@ including Home, City, and Profile, along with relevant icons and descriptions.
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/citySectionText2" />
+            app:layout_constraintTop_toBottomOf="@id/citySectionText1" />
 
         <ImageView
             android:id="@+id/profileIconHelp"
