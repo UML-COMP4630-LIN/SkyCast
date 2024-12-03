@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.skycast.databinding.FragmentWeatherBinding;
@@ -46,6 +47,7 @@ public class WeatherFragment extends Fragment {
         TextView feelsLike = binding.feelsLike;
         TextView tempRange = binding.TempRange;
         Button metricConvertor = binding.button;
+        ImageView weatherImage = binding.imageView;
 
         // Initialize the GetWeather ViewModel
         GetWeather getWeather = new ViewModelProvider(requireActivity()).get(GetWeather.class);
@@ -69,7 +71,7 @@ public class WeatherFragment extends Fragment {
         });
 
         // Observe specific weather data changes and update the UI dynamically
-        observeWeatherData(getWeather, currentTemp, tempRange, feelsLike, windSpeed);
+        observeWeatherData(getWeather, currentTemp, tempRange, feelsLike, windSpeed, weatherImage);
 
         return view;
     }
@@ -112,7 +114,8 @@ public class WeatherFragment extends Fragment {
      * @param windSpeed   The TextView for displaying the wind speed.
      */
     private void observeWeatherData(GetWeather getWeather, TextView currentTemp,
-                                    TextView tempRange, TextView feelsLike, TextView windSpeed) {
+                                    TextView tempRange, TextView feelsLike, TextView windSpeed,
+                                    ImageView weatherImage) {
         getWeather.getCurrTemp().observe(getViewLifecycleOwner(), temp ->
                 currentTemp.setText(getWeather.getIsMetric().getValue() ?
                         convertKelvinToCelsius(temp) : convertKelvinToFahrenheit(temp))
@@ -138,6 +141,19 @@ public class WeatherFragment extends Fragment {
                 windSpeed.setText(getWeather.getIsMetric().getValue() ?
                         speed + " m/s" : meterPerSecondToFeetPerSecond(speed))
         );
+        getWeather.getMain().observe(getViewLifecycleOwner(), main -> {
+            if (main.equals("Rain")) {
+                weatherImage.setImageResource(R.drawable.rain);
+            } else if (main.equals("Snow")) {
+                weatherImage.setImageResource(R.drawable.snow);
+            } else if (main.equals("Clouds")) {
+                weatherImage.setImageResource(R.drawable.cloud);
+            } else if (main.equals("Thunder")) {
+                weatherImage.setImageResource(R.drawable.thunder_cloud);
+            } else {
+                weatherImage.setImageResource(R.drawable.cloudandsun);
+            }
+        });
     }
 
     /**
