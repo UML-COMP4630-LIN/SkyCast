@@ -58,6 +58,11 @@ public class HomeFragment extends Fragment {
         AnimationDrawable rainAnimation = (AnimationDrawable) rainAnimationView.getDrawable();
         rainAnimation.start();
 
+        //Snow Animation
+        ImageView snowAnimationView = binding.snowAnimationView;
+        AnimationDrawable snowAnimation = (AnimationDrawable) snowAnimationView.getDrawable();
+        snowAnimation.start();
+
         // Load the gradient background
         gradientDrawable = (GradientDrawable) ContextCompat.getDrawable(requireContext(), R.drawable.gradient_background);
 
@@ -86,6 +91,9 @@ public class HomeFragment extends Fragment {
                 } else if (currentImage.equals("rain")) {
                     binding.rainAnimationView.startAnimation(fadeOut);
                     binding.lightningcloud.startAnimation(fadeOut);
+                } else if (currentImage.equals("snow")) {
+                    binding.snowAnimationView.startAnimation(fadeOut);
+                    binding.snowcloud.startAnimation(fadeOut);
                 }
             }
 
@@ -106,7 +114,9 @@ public class HomeFragment extends Fragment {
                 if (currentImage.equals("cloudandsun") || currentImage.equals("thunder")) {
                     binding.weatherIconImage.setVisibility(View.VISIBLE);
                     binding.rainAnimationView.setVisibility(View.INVISIBLE);
+                    binding.snowAnimationView.setVisibility(View.INVISIBLE);
                     binding.lightningcloud.setVisibility(View.INVISIBLE);
+                    binding.snowcloud.setVisibility(View.INVISIBLE);
                     binding.lightningbolt.setVisibility(View.INVISIBLE);
                     binding.weatherIconImage.startAnimation(fadeIn);
                     binding.weatherIconImage.startAnimation(growShrinkAnimation);
@@ -119,7 +129,7 @@ public class HomeFragment extends Fragment {
                     binding.lightningbolt.startAnimation(fadeIn);
                     binding.lightningcloud.startAnimation(growShrinkAnimation);
                     binding.lightningbolt.startAnimation(growShrinkAnimation);
-                }else if (currentImage.equals("rain")) {
+                } else if (currentImage.equals("rain")) {
                     binding.weatherIconImage.setVisibility(View.INVISIBLE);
                     binding.rainAnimationView.setVisibility(View.VISIBLE);
                     binding.lightningcloud.setVisibility(View.VISIBLE);
@@ -128,6 +138,16 @@ public class HomeFragment extends Fragment {
                     binding.rainAnimationView.startAnimation(fadeIn);
                     binding.lightningcloud.startAnimation(growShrinkAnimation);
                     binding.rainAnimationView.startAnimation(growShrinkAnimation);
+                } else if (currentImage.equals("snow")) {
+                    binding.weatherIconImage.setVisibility(View.INVISIBLE);
+                    binding.snowAnimationView.setVisibility(View.VISIBLE);
+                    binding.snowcloud.setVisibility(View.VISIBLE);
+                    binding.rainAnimationView.setVisibility(View.INVISIBLE);
+                    binding.lightningcloud.setVisibility(View.INVISIBLE);
+                    binding.snowcloud.startAnimation(fadeIn);
+                    binding.snowAnimationView.startAnimation(fadeIn);
+                    binding.snowcloud.startAnimation(growShrinkAnimation);
+                    binding.snowAnimationView.startAnimation(growShrinkAnimation);
                 }
             }
 
@@ -200,8 +220,14 @@ public class HomeFragment extends Fragment {
                 break;
             case "rain":
                 binding.weatherIconImage.setImageResource(R.drawable.cloudandsun);
+                Log.d("StateTransition", "Transitioning to snow");
+                currentImage = "snow";
+                break;
+            case "snow":
+                binding.weatherIconImage.setImageResource(R.drawable.cloudandsun);
                 Log.d("StateTransition", "Transitioning to cloudandsun");
                 currentImage = "cloudandsun";
+                break;
         }
     }
 

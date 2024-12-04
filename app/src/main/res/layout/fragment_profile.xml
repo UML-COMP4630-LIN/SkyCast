@@ -189,7 +189,7 @@ Each section includes a title, profile picture, and descriptions for team member
                   android:layout_marginTop="10dp"
                   android:layout_marginBottom="20dp"
                   android:layout_marginStart="10dp"
-                  android:src="@drawable/angelos"
+                  android:src="@drawable/afsa"
                   app:layout_constraintStart_toStartOf="parent"
                   app:layout_constraintTop_toBottomOf="@id/afsa_title" />
 

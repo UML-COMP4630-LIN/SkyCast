@@ -96,4 +96,27 @@ and buttons/images for interactive weather displays.
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Snow Animation Image Section -->
+    <ImageView
+        android:id="@+id/snowAnimationView"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_margin="20dp"
+        android:src="@drawable/snow_animation"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/selectCitySpinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+    <!-- Snow cloud Image  -->
+    <ImageView
+        android:id="@+id/snowcloud"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:src="@drawable/snowcloud"
+        app:layout_constraintTop_toBottomOf="@id/selectCitySpinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="20dp"
+        android:visibility="invisible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

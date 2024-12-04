@@ -1,0 +1,7 @@
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item android:drawable="@drawable/snowflake_frame_1" android:duration="200" />
+    <item android:drawable="@drawable/snowflake_frame_2" android:duration="200" />
+    <item android:drawable="@drawable/snowflake_frame_3" android:duration="200" />
+    <!-- Add more frames -->
+</animation-list>

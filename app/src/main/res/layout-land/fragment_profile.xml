@@ -169,7 +169,7 @@ about team members, including titles, images, and descriptions.
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
             android:layout_marginStart="30dp"
-            android:src="@drawable/angelos"
+            android:src="@drawable/afsa"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/afsa_title" />
 
