@@ -24,9 +24,9 @@ public class GetWeather extends ViewModel {
     private MutableLiveData<Double> lowTemp =  new MutableLiveData<>(0.);
     private MutableLiveData<Double> highTemp =  new MutableLiveData<>(0.);
     private MutableLiveData<Double> feels_like =  new MutableLiveData<>(0.);
-    private MutableLiveData<Long> humidity =  new MutableLiveData<>();
-    private MutableLiveData<Long> sunset = new MutableLiveData<>();
-    private MutableLiveData<Long> sunrise = new MutableLiveData<>();
+    private MutableLiveData<Long> humidity =  new MutableLiveData<>(0L);
+    private MutableLiveData<Long> sunset = new MutableLiveData<>(0L);
+    private MutableLiveData<Long> sunrise = new MutableLiveData<>(0L);
     private MutableLiveData<String> main = new MutableLiveData<>("");
     private MutableLiveData<String> description = new MutableLiveData<>("");
     private MutableLiveData<Double> speed = new MutableLiveData<>(0.);

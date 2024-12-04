@@ -18,6 +18,11 @@ import android.widget.TextView;
 
 import com.example.skycast.databinding.FragmentWeatherBinding;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
 /**
  * WeatherFragment is responsible for displaying the current weather details for a selected city.
  * It observes the weather data from the GetWeather ViewModel and updates the UI dynamically.
@@ -26,6 +31,8 @@ public class WeatherFragment extends Fragment {
     private FragmentWeatherBinding binding;
     private String city;
     private String tempRangeString;
+    private GradientDrawable gradientDrawable;
+
 
     /**
      * Called to create and return the view hierarchy for the fragment.
@@ -41,12 +48,9 @@ public class WeatherFragment extends Fragment {
         binding = FragmentWeatherBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        // Load the gradient background
-        GradientDrawable gradientDrawable = (GradientDrawable) ContextCompat.getDrawable(requireContext(), R.drawable.gradient_background);
-        binding.getRoot().setBackground(gradientDrawable);
 
-        // Start the dynamic background animation
-        animateBackground();
+
+
 
         // Obtain the city name from arguments and set it in the UI
         city = WeatherFragmentArgs.fromBundle(requireArguments()).getCity();
@@ -58,6 +62,9 @@ public class WeatherFragment extends Fragment {
         TextView tempRange = binding.TempRange;
         Button metricConvertor = binding.button;
         ImageView weatherImage = binding.imageView;
+
+        TextView sunriseText = binding.sunriseText;
+        TextView sunsetText = binding.sunsetText;
 
         // Initialize the GetWeather ViewModel
         GetWeather getWeather = new ViewModelProvider(requireActivity()).get(GetWeather.class);
@@ -78,7 +85,7 @@ public class WeatherFragment extends Fragment {
         });
 
         // Observe specific weather data changes and update the UI dynamically
-        observeWeatherData(getWeather, currentTemp, tempRange, feelsLike, windSpeed, weatherImage);
+        observeWeatherData(getWeather, currentTemp, tempRange, feelsLike, windSpeed, weatherImage, sunriseText, sunsetText);
 
         return view;
     }
@@ -122,7 +129,7 @@ public class WeatherFragment extends Fragment {
      */
     private void observeWeatherData(GetWeather getWeather, TextView currentTemp,
                                     TextView tempRange, TextView feelsLike, TextView windSpeed,
-                                    ImageView weatherImage) {
+                                    ImageView weatherImage, TextView sunriseText, TextView sunsetText) {
         getWeather.getCurrTemp().observe(getViewLifecycleOwner(), temp -> {
             if (temp != null) {
                 currentTemp.setText(getWeather.getIsMetric().getValue() ?
@@ -156,6 +163,19 @@ public class WeatherFragment extends Fragment {
             if (speed != null) {
                 windSpeed.setText(getWeather.getIsMetric().getValue() ?
                         speed + " m/s" : meterPerSecondToFeetPerSecond(speed));
+            }
+        });
+
+        // Observe sunrise and sunset values and update the respective TextViews
+        getWeather.getSunrise().observe(getViewLifecycleOwner(), sunrise -> {
+            if (sunrise != null) {
+                sunriseText.setText(getString(R.string.sunrise, convertTime(sunrise)));
+            }
+        });
+
+        getWeather.getSunset().observe(getViewLifecycleOwner(), sunset -> {
+            if (sunset != null) {
+                sunsetText.setText(getString(R.string.sunset, convertTime(sunset)));
             }
         });
 
@@ -204,6 +224,9 @@ public class WeatherFragment extends Fragment {
                         };
                         break;
                 }
+                // Start the dynamic background animation
+                // Pass colors to animateBackground
+                animateBackground(colors);
 
                 // Set the gradient background with the selected colors
                 GradientDrawable gradientDrawable = new GradientDrawable(
@@ -215,21 +238,21 @@ public class WeatherFragment extends Fragment {
 
     }
 
-    private void animateBackground() {
-        GradientDrawable gradientDrawable = (GradientDrawable) binding.getRoot().getBackground();
+    private void animateBackground(int[] colors) {
+        // Initialize the GradientDrawable
+        if (gradientDrawable == null) {
+            gradientDrawable = new GradientDrawable();
+            gradientDrawable.setOrientation(GradientDrawable.Orientation.TOP_BOTTOM);
+            binding.getRoot().setBackground(gradientDrawable);
+        }
 
-        int[] colors = {
-                Color.parseColor("#B3E0D6"), // Light blue
-                Color.parseColor("#C4DBBB"), // Light green
-                Color.parseColor("#BBDBD5"), // Light teal/slate
-                Color.parseColor("#A2BCC1")  // Dark blue
-        };
-
+        // Create a ValueAnimator to cycle through the colors
         ValueAnimator colorAnimator = ValueAnimator.ofFloat(0, colors.length - 1);
-        colorAnimator.setDuration(10000); // 10 seconds for the full cycle
+        colorAnimator.setDuration(30000); // 30 seconds for the full cycle
         colorAnimator.setRepeatMode(ValueAnimator.REVERSE);
         colorAnimator.setRepeatCount(ValueAnimator.INFINITE);
 
+        // Add an update listener to update the gradient dynamically
         colorAnimator.addUpdateListener(animation -> {
             float animatedValue = (float) animation.getAnimatedValue();
             int startIndex = (int) Math.floor(animatedValue);
@@ -240,11 +263,16 @@ public class WeatherFragment extends Fragment {
             int endColor = colors[endIndex];
             int interpolatedColor = interpolateColor(startColor, endColor, fraction);
 
-            gradientDrawable.setColors(new int[]{Color.WHITE, interpolatedColor});
+            // Update the gradient colors
+            gradientDrawable.setColors(new int[]{interpolatedColor, Color.WHITE});
+            binding.getRoot().invalidate(); // Force redraw to apply changes
         });
 
+        // Start the animation
         colorAnimator.start();
     }
+
+
 
     /**
      * Adjustments made to animation
@@ -270,6 +298,13 @@ public class WeatherFragment extends Fragment {
         int interpolatedB = (int) (startB + (endB - startB) * fraction);
 
         return (interpolatedA << 24) | (interpolatedR << 16) | (interpolatedG << 8) | interpolatedB;
+    }
+
+
+    private String convertTime(long unixTime) {
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+        sdf.setTimeZone(TimeZone.getDefault()); // Use the device's local timezone
+        return sdf.format(new Date(unixTime * 1000)); // Convert seconds to milliseconds
     }
 
     /**
