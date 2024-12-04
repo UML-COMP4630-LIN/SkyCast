@@ -1,3 +1,18 @@
+/***********************************************
+ Authors: <Theodor Farag, Afsa Nafe, Angelos Boules>
+ Date: <12/6/24>
+ Purpose: <The purpose of the app is display the weather information on a selected city based on the information retrived based
+ on the API from openWeather >
+ What Learned: <We learned how to put the skills we have ben taught all in one app to make it more dynamic is useful,
+ We also learned to how to use and access information from an API. How to parse a JSON file using Retrofits and a api interface
+ to set up the API URL, As well as how to make animations and cool designs based by making a resourse file and sepecifying
+ the snimation feature within the file>
+ Sources of Help: <
+ https://developer.android.com/studio
+ https://www.youtube.com/watch?v=T5v74K9fOUw&t=879s&ab_channel=Code24
+ >
+ Time Spent (Hours): <5-7 days>
+ ***********************************************/
 package com.example.skycast;
 
 import android.os.Bundle;
@@ -107,3 +122,21 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 }
+/*
+Mobile App Development I -- COMP.4630 Honor Statement
+The practice of good ethical behavior is essential for maintaining good order
+in the classroom, providing an enriching learning experience for students,
+and training as a practicing computing professional upon graduation. This
+practice is manifested in the University's Academic Integrity policy.
+Students are expected to strictly avoid academic dishonesty and adhere to the
+Academic Integrity policy as outlined in the course catalog. Violations will
+be dealt with as outlined therein. All programming assignments in this class
+are to be done by the student alone unless otherwise specified. No outside
+help is permitted except the instructor and approved tutors.
+I certify that the work submitted with this assignment is mine and was
+generated in a manner consistent with this document, the course academic
+policy on the course website on Blackboard, and the UMass Lowell academic
+code.
+Date: 12/6/24
+Names:Theodor Farag, Afsa Nafe, Angelos Boules
+*/
