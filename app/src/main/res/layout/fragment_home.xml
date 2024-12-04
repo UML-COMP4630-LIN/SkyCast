@@ -32,6 +32,7 @@ and buttons/images for interactive weather displays.
         android:layout_width="140dp"
         android:layout_height="48dp"
         android:layout_marginTop="40dp"
+        android:autofillHints=""
         app:layout_constraintTop_toBottomOf="@id/WelcomeText"
         app:layout_constraintStart_toStartOf="@id/WelcomeText"
         app:layout_constraintEnd_toEndOf="@id/WelcomeText"

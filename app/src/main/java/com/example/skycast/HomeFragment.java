@@ -17,10 +17,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.skycast.databinding.FragmentHomeBinding;
@@ -53,12 +55,12 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        //Rain Animation
+        // Rain Animation
         ImageView rainAnimationView = binding.rainAnimationView;
         AnimationDrawable rainAnimation = (AnimationDrawable) rainAnimationView.getDrawable();
         rainAnimation.start();
 
-        //Snow Animation
+        // Snow Animation
         ImageView snowAnimationView = binding.snowAnimationView;
         AnimationDrawable snowAnimation = (AnimationDrawable) snowAnimationView.getDrawable();
         snowAnimation.start();
@@ -164,6 +166,11 @@ public class HomeFragment extends Fragment {
         // Observe the selected cities list and update the spinner
         cityViewModel.getSelectedCities().observe(getViewLifecycleOwner(), cities -> {
             List<String> cityNames = new ArrayList<>();
+
+            // Add a hint as the first item
+            cityNames.add("Select a city");
+
+            // Add actual city names
             for (City city : cities) {
                 cityNames.add(city.getName());
             }
@@ -173,24 +180,50 @@ public class HomeFragment extends Fragment {
                     android.R.layout.simple_spinner_item, cityNames);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             binding.selectCitySpinner.setAdapter(adapter);
+
+            // Set the default selection to the hint
+            binding.selectCitySpinner.setSelection(0);
+
+            // Handle Spinner item selection
+            binding.selectCitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    String selectedItem = cityNames.get(position);
+
+                    if (position == 0) {
+                        // Hint is selected: Make hint text gray and take no action
+                        if (view != null) {
+                            ((TextView) view).setTextColor(Color.GRAY);
+                        }
+                    } else {
+                        // Valid city selected
+                        if (view != null) {
+                            ((TextView) view).setTextColor(Color.BLACK);
+                        }
+                        Toast.makeText(requireContext(), "Selected: " + selectedItem, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                    // Do nothing when nothing is selected
+                }
+            });
         });
 
         // Set up the weather button click listener to navigate to the WeatherFragment
         Button weatherButton = binding.generateweatherbutton;
         Spinner citiesSpinner = binding.selectCitySpinner;
 
-        weatherButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Navigate to WeatherFragment if a city is selected
-                if (citiesSpinner.getAdapter().getCount() != 0) {
-                    String selectedCity = citiesSpinner.getSelectedItem().toString();
-                    HomeFragmentDirections.ActionHomeFragmentToWeatherFragment action = HomeFragmentDirections.actionHomeFragmentToWeatherFragment(selectedCity);
-                    Navigation.findNavController(v).navigate(action);
-                } else {
-                    // Show error message if no cities are selected
-                    Toast.makeText(requireContext(), "Add Cities To your List", Toast.LENGTH_LONG).show();
-                }
+        weatherButton.setOnClickListener(v -> {
+            // Navigate to WeatherFragment if a city is selected
+            if (citiesSpinner.getAdapter().getCount() != 0 && citiesSpinner.getSelectedItemPosition() != 0) {
+                String selectedCity = citiesSpinner.getSelectedItem().toString();
+                HomeFragmentDirections.ActionHomeFragmentToWeatherFragment action = HomeFragmentDirections.actionHomeFragmentToWeatherFragment(selectedCity);
+                Navigation.findNavController(v).navigate(action);
+            } else {
+                // Show error message if no cities are selected
+                Toast.makeText(requireContext(), "Please select a valid city", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -298,7 +331,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null
-        ;
+        binding = null; // Avoid memory leaks
     }
 }
