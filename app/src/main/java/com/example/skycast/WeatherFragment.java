@@ -226,7 +226,6 @@ public class WeatherFragment extends Fragment {
                 }
                 // Start the dynamic background animation
                 // Pass colors to animateBackground
-                animateBackground(colors);
 
                 // Set the gradient background with the selected colors
                 GradientDrawable gradientDrawable = new GradientDrawable(
@@ -238,39 +237,7 @@ public class WeatherFragment extends Fragment {
 
     }
 
-    private void animateBackground(int[] colors) {
-        // Initialize the GradientDrawable
-        if (gradientDrawable == null) {
-            gradientDrawable = new GradientDrawable();
-            gradientDrawable.setOrientation(GradientDrawable.Orientation.TOP_BOTTOM);
-            binding.getRoot().setBackground(gradientDrawable);
-        }
 
-        // Create a ValueAnimator to cycle through the colors
-        ValueAnimator colorAnimator = ValueAnimator.ofFloat(0, colors.length - 1);
-        colorAnimator.setDuration(30000); // 30 seconds for the full cycle
-        colorAnimator.setRepeatMode(ValueAnimator.REVERSE);
-        colorAnimator.setRepeatCount(ValueAnimator.INFINITE);
-
-        // Add an update listener to update the gradient dynamically
-        colorAnimator.addUpdateListener(animation -> {
-            float animatedValue = (float) animation.getAnimatedValue();
-            int startIndex = (int) Math.floor(animatedValue);
-            int endIndex = (int) Math.ceil(animatedValue);
-            float fraction = animatedValue - startIndex;
-
-            int startColor = colors[startIndex];
-            int endColor = colors[endIndex];
-            int interpolatedColor = interpolateColor(startColor, endColor, fraction);
-
-            // Update the gradient colors
-            gradientDrawable.setColors(new int[]{interpolatedColor, Color.WHITE});
-            binding.getRoot().invalidate(); // Force redraw to apply changes
-        });
-
-        // Start the animation
-        colorAnimator.start();
-    }
 
 
 
@@ -281,24 +248,7 @@ public class WeatherFragment extends Fragment {
      *
      * 2. Valid Use of <<: The corrected code ensures only integers are involved in the bitwise left-shift operations.
      * */
-    private int interpolateColor(int startColor, int endColor, float fraction) {
-        int startA = (startColor >> 24) & 0xff;
-        int startR = (startColor >> 16) & 0xff;
-        int startG = (startColor >> 8) & 0xff;
-        int startB = startColor & 0xff;
 
-        int endA = (endColor >> 24) & 0xff;
-        int endR = (endColor >> 16) & 0xff;
-        int endG = (endColor >> 8) & 0xff;
-        int endB = endColor & 0xff;
-
-        int interpolatedA = (int) (startA + (endA - startA) * fraction);
-        int interpolatedR = (int) (startR + (endR - startR) * fraction);
-        int interpolatedG = (int) (startG + (endG - startG) * fraction);
-        int interpolatedB = (int) (startB + (endB - startB) * fraction);
-
-        return (interpolatedA << 24) | (interpolatedR << 16) | (interpolatedG << 8) | interpolatedB;
-    }
 
 
     private String convertTime(long unixTime) {
