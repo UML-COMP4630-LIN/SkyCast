@@ -1,9 +1,12 @@
 package com.example.skycast;
 
+import android.animation.ValueAnimator;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
@@ -38,6 +41,13 @@ public class WeatherFragment extends Fragment {
         binding = FragmentWeatherBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        // Load the gradient background
+        GradientDrawable gradientDrawable = (GradientDrawable) ContextCompat.getDrawable(requireContext(), R.drawable.gradient_background);
+        binding.getRoot().setBackground(gradientDrawable);
+
+        // Start the dynamic background animation
+        animateBackground();
+
         // Obtain the city name from arguments and set it in the UI
         city = WeatherFragmentArgs.fromBundle(requireArguments()).getCity();
         binding.cityName.setText(city);
@@ -55,18 +65,15 @@ public class WeatherFragment extends Fragment {
 
         // Toggle between metric and imperial units when the button is clicked
         metricConvertor.setOnClickListener(v -> {
-            boolean isMetric = !getWeather.getIsMetric().getValue();
+            boolean isMetric = getWeather.getIsMetric().getValue() != null && !getWeather.getIsMetric().getValue();
             getWeather.setIsMetric(isMetric);
         });
 
         // Observe changes to the unit system and update the UI accordingly
         getWeather.getIsMetric().observe(getViewLifecycleOwner(), isMetric -> {
-            if (isMetric) {
-                metricConvertor.setText("CONVERT TO IMPERIAL");
-                updateWeatherUI(getWeather, true, currentTemp, tempRange, feelsLike, windSpeed);
-            } else {
-                metricConvertor.setText("CONVERT TO METRIC");
-                updateWeatherUI(getWeather, false, currentTemp, tempRange, feelsLike, windSpeed);
+            if (isMetric != null) {
+                metricConvertor.setText(isMetric ? "CONVERT TO IMPERIAL" : "CONVERT TO METRIC");
+                updateWeatherUI(getWeather, isMetric, currentTemp, tempRange, feelsLike, windSpeed);
             }
         });
 
@@ -116,44 +123,153 @@ public class WeatherFragment extends Fragment {
     private void observeWeatherData(GetWeather getWeather, TextView currentTemp,
                                     TextView tempRange, TextView feelsLike, TextView windSpeed,
                                     ImageView weatherImage) {
-        getWeather.getCurrTemp().observe(getViewLifecycleOwner(), temp ->
+        getWeather.getCurrTemp().observe(getViewLifecycleOwner(), temp -> {
+            if (temp != null) {
                 currentTemp.setText(getWeather.getIsMetric().getValue() ?
-                        convertKelvinToCelsius(temp) : convertKelvinToFahrenheit(temp))
-        );
+                        convertKelvinToCelsius(temp) : convertKelvinToFahrenheit(temp));
+            }
+        });
 
         getWeather.getLowTemp().observe(getViewLifecycleOwner(), lowTemp -> {
-            tempRangeString = getWeather.getIsMetric().getValue() ?
-                    convertKelvinToCelsius(lowTemp) : convertKelvinToFahrenheit(lowTemp);
+            if (lowTemp != null) {
+                tempRangeString = getWeather.getIsMetric().getValue() ?
+                        convertKelvinToCelsius(lowTemp) : convertKelvinToFahrenheit(lowTemp);
+            }
         });
 
         getWeather.getHighTemp().observe(getViewLifecycleOwner(), highTemp -> {
-            tempRangeString += "- " + (getWeather.getIsMetric().getValue() ?
-                    convertKelvinToCelsius(highTemp) : convertKelvinToFahrenheit(highTemp));
-            tempRange.setText(tempRangeString);
-        });
-
-        getWeather.getFeels_like().observe(getViewLifecycleOwner(), feels ->
-                feelsLike.setText(getWeather.getIsMetric().getValue() ?
-                        convertKelvinToCelsius(feels) : convertKelvinToFahrenheit(feels))
-        );
-
-        getWeather.getSpeed().observe(getViewLifecycleOwner(), speed ->
-                windSpeed.setText(getWeather.getIsMetric().getValue() ?
-                        speed + " m/s" : meterPerSecondToFeetPerSecond(speed))
-        );
-        getWeather.getMain().observe(getViewLifecycleOwner(), main -> {
-            if (main.equals("Rain")) {
-                weatherImage.setImageResource(R.drawable.rain);
-            } else if (main.equals("Snow")) {
-                weatherImage.setImageResource(R.drawable.snow);
-            } else if (main.equals("Clouds")) {
-                weatherImage.setImageResource(R.drawable.cloud);
-            } else if (main.equals("Thunder")) {
-                weatherImage.setImageResource(R.drawable.thunder_cloud);
-            } else {
-                weatherImage.setImageResource(R.drawable.cloudandsun);
+            if (highTemp != null) {
+                tempRangeString += "- " + (getWeather.getIsMetric().getValue() ?
+                        convertKelvinToCelsius(highTemp) : convertKelvinToFahrenheit(highTemp));
+                tempRange.setText(tempRangeString);
             }
         });
+
+        getWeather.getFeels_like().observe(getViewLifecycleOwner(), feels -> {
+            if (feels != null) {
+                feelsLike.setText(getWeather.getIsMetric().getValue() ?
+                        convertKelvinToCelsius(feels) : convertKelvinToFahrenheit(feels));
+            }
+        });
+
+        getWeather.getSpeed().observe(getViewLifecycleOwner(), speed -> {
+            if (speed != null) {
+                windSpeed.setText(getWeather.getIsMetric().getValue() ?
+                        speed + " m/s" : meterPerSecondToFeetPerSecond(speed));
+            }
+        });
+
+        getWeather.getMain().observe(getViewLifecycleOwner(), main -> {
+            if (main != null) {
+                int[] colors;
+                switch (main) {
+                    case "Rain":
+                        weatherImage.setImageResource(R.drawable.rain);
+                        colors = new int[]{
+                                Color.parseColor("#6E8FB4"), // Dark blue
+                                Color.parseColor("#8CA9CC"), // Medium blue
+                                Color.parseColor("#A3C0D9")  // Light blue
+                        };
+                        break;
+                    case "Snow":
+                        weatherImage.setImageResource(R.drawable.snow);
+                        colors = new int[]{
+                                Color.parseColor("#E0EFFF"), // Very light blue
+                                Color.parseColor("#B3D9FF"), // Light blue
+                                Color.parseColor("#80C1FF")  // Sky blue
+                        };
+                        break;
+                    case "Clouds":
+                        weatherImage.setImageResource(R.drawable.cloud);
+                        colors = new int[]{
+                                Color.parseColor("#B0BEC5"), // Gray
+                                Color.parseColor("#CFD8DC"), // Light gray
+                                Color.parseColor("#ECEFF1")  // Very light gray
+                        };
+                        break;
+                    case "Thunder":
+                        weatherImage.setImageResource(R.drawable.thunder_cloud);
+                        colors = new int[]{
+                                Color.parseColor("#3E2723"), // Dark brown
+                                Color.parseColor("#5D4037"), // Medium brown
+                                Color.parseColor("#8D6E63")  // Light brown
+                        };
+                        break;
+                    default:
+                        weatherImage.setImageResource(R.drawable.cloudandsun);
+                        colors = new int[]{
+                                Color.parseColor("#FFE082"), // Light yellow
+                                Color.parseColor("#FFCC80"), // Peach
+                                Color.parseColor("#FFAB91")  // Light orange
+                        };
+                        break;
+                }
+
+                // Set the gradient background with the selected colors
+                GradientDrawable gradientDrawable = new GradientDrawable(
+                        GradientDrawable.Orientation.TOP_BOTTOM, colors
+                );
+                binding.getRoot().setBackground(gradientDrawable);
+            }
+        });
+
+    }
+
+    private void animateBackground() {
+        GradientDrawable gradientDrawable = (GradientDrawable) binding.getRoot().getBackground();
+
+        int[] colors = {
+                Color.parseColor("#B3E0D6"), // Light blue
+                Color.parseColor("#C4DBBB"), // Light green
+                Color.parseColor("#BBDBD5"), // Light teal/slate
+                Color.parseColor("#A2BCC1")  // Dark blue
+        };
+
+        ValueAnimator colorAnimator = ValueAnimator.ofFloat(0, colors.length - 1);
+        colorAnimator.setDuration(10000); // 10 seconds for the full cycle
+        colorAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        colorAnimator.setRepeatCount(ValueAnimator.INFINITE);
+
+        colorAnimator.addUpdateListener(animation -> {
+            float animatedValue = (float) animation.getAnimatedValue();
+            int startIndex = (int) Math.floor(animatedValue);
+            int endIndex = (int) Math.ceil(animatedValue);
+            float fraction = animatedValue - startIndex;
+
+            int startColor = colors[startIndex];
+            int endColor = colors[endIndex];
+            int interpolatedColor = interpolateColor(startColor, endColor, fraction);
+
+            gradientDrawable.setColors(new int[]{Color.WHITE, interpolatedColor});
+        });
+
+        colorAnimator.start();
+    }
+
+    /**
+     * Adjustments made to animation
+     * 1. Intermediate Values Cast to int: The results of calculations with fraction (a float) are
+     *   explicitly cast to int before applying bitwise operations.
+     *
+     * 2. Valid Use of <<: The corrected code ensures only integers are involved in the bitwise left-shift operations.
+     * */
+    private int interpolateColor(int startColor, int endColor, float fraction) {
+        int startA = (startColor >> 24) & 0xff;
+        int startR = (startColor >> 16) & 0xff;
+        int startG = (startColor >> 8) & 0xff;
+        int startB = startColor & 0xff;
+
+        int endA = (endColor >> 24) & 0xff;
+        int endR = (endColor >> 16) & 0xff;
+        int endG = (endColor >> 8) & 0xff;
+        int endB = endColor & 0xff;
+
+        int interpolatedA = (int) (startA + (endA - startA) * fraction);
+        int interpolatedR = (int) (startR + (endR - startR) * fraction);
+        int interpolatedG = (int) (startG + (endG - startG) * fraction);
+        int interpolatedB = (int) (startB + (endB - startB) * fraction);
+
+        return (interpolatedA << 24) | (interpolatedR << 16) | (interpolatedG << 8) | interpolatedB;
     }
 
     /**
