@@ -272,13 +272,13 @@ public class HomeFragment extends Fragment {
 
         int[] colors = {
                 Color.parseColor("#B3E0D6"), // Light blue
-                Color.parseColor("#FFA07A"), // Light orange
-                Color.parseColor("#FFD700"), // Golden yellow
-                Color.parseColor("#87CEEB")  // Sky blue
+                Color.parseColor("#C4DBBB"), // Light green
+                Color.parseColor("#BBDBD5"), // light teal/slate
+                Color.parseColor("#A2BCC1")  // Dark blue
         };
 
         ValueAnimator colorAnimator = ValueAnimator.ofFloat(0, colors.length - 1);
-        colorAnimator.setDuration(10000); // 5 seconds for the full cycle
+        colorAnimator.setDuration(60000); // 50 seconds for the full cycle
         colorAnimator.setRepeatMode(ValueAnimator.REVERSE);
         colorAnimator.setRepeatCount(ValueAnimator.INFINITE);
 
