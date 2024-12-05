@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This XML file defines a scale animation.
+scales a view from 80% of its size to 100% over 3000 milliseconds,
+using the center of the view as the pivot point. The animation reverses direction
+and repeats for 2 cycles.
+-->
+<scale xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="3000"
+    android:fromXScale=".8"
+    android:toXScale="1.0"
+    android:fromYScale=".8"
+    android:toYScale="1.0"
+    android:pivotX="50%"
+    android:pivotY="50%"
+    android:repeatMode="reverse"
+    android:repeatCount="infinite" /> <!-- Repeat the animation infinitely -->

@@ -2,6 +2,7 @@ package com.example.skycast;
 
 import android.animation.ValueAnimator;
 import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 
@@ -12,6 +13,8 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,7 +52,11 @@ public class WeatherFragment extends Fragment {
         View view = binding.getRoot();
 
 
+        // Load animations
+        Animation growShrinkAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.shrink_grow_weather);
 
+        // Apply the animation to the weather icon
+        binding.weatherIconImage.startAnimation(growShrinkAnimation);
 
 
         // Obtain the city name from arguments and set it in the UI
@@ -61,7 +68,7 @@ public class WeatherFragment extends Fragment {
         TextView feelsLike = binding.feelsLike;
         TextView tempRange = binding.TempRange;
         Button metricConvertor = binding.button;
-        ImageView weatherImage = binding.sunnyImageView;
+        ImageView weatherImage = binding.weatherIconImage;
 
         TextView humidityPercent = binding.humidityPercent;
 
