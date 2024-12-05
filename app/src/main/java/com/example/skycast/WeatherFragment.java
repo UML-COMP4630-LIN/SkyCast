@@ -61,7 +61,7 @@ public class WeatherFragment extends Fragment {
         TextView feelsLike = binding.feelsLike;
         TextView tempRange = binding.TempRange;
         Button metricConvertor = binding.button;
-        ImageView weatherImage = binding.imageView;
+        ImageView weatherImage = binding.sunnyImageView;
 
         TextView humidityPercent = binding.humidityPercent;
 
