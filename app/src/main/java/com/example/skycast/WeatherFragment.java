@@ -63,8 +63,12 @@ public class WeatherFragment extends Fragment {
         Button metricConvertor = binding.button;
         ImageView weatherImage = binding.imageView;
 
+        TextView humidityPercent = binding.humidityPercent;
+
         TextView sunriseText = binding.sunriseText;
         TextView sunsetText = binding.sunsetText;
+
+
 
         // Initialize the GetWeather ViewModel
         GetWeather getWeather = new ViewModelProvider(requireActivity()).get(GetWeather.class);
@@ -80,12 +84,12 @@ public class WeatherFragment extends Fragment {
         getWeather.getIsMetric().observe(getViewLifecycleOwner(), isMetric -> {
             if (isMetric != null) {
                 metricConvertor.setText(isMetric ? "CONVERT TO IMPERIAL" : "CONVERT TO METRIC");
-                updateWeatherUI(getWeather, isMetric, currentTemp, tempRange, feelsLike, windSpeed);
+                updateWeatherUI(getWeather, isMetric, currentTemp, tempRange, feelsLike, windSpeed, sunriseText, sunsetText);
             }
         });
 
         // Observe specific weather data changes and update the UI dynamically
-        observeWeatherData(getWeather, currentTemp, tempRange, feelsLike, windSpeed, weatherImage, sunriseText, sunsetText);
+        observeWeatherData(getWeather, currentTemp, tempRange, feelsLike, windSpeed, weatherImage, sunriseText, sunsetText, humidityPercent);
 
         return view;
     }
@@ -102,7 +106,7 @@ public class WeatherFragment extends Fragment {
      */
     private void updateWeatherUI(GetWeather getWeather, boolean isMetric,
                                  TextView currentTemp, TextView tempRange,
-                                 TextView feelsLike, TextView windSpeed) {
+                                 TextView feelsLike, TextView windSpeed, TextView sunriseText, TextView sunsetText) {
         if (isMetric) {
             currentTemp.setText(convertKelvinToCelsius(getWeather.getCurrTemp().getValue()));
             tempRange.setText(convertKelvinToCelsius(getWeather.getLowTemp().getValue()) + "- " +
@@ -116,7 +120,34 @@ public class WeatherFragment extends Fragment {
             feelsLike.setText(convertKelvinToFahrenheit(getWeather.getFeels_like().getValue()));
             windSpeed.setText(meterPerSecondToFeetPerSecond(getWeather.getSpeed().getValue()));
         }
+
+        // Time conversion for sunrise and sunset
+        getWeather.getSunrise().observe(getViewLifecycleOwner(), sunrise -> {
+            if (sunrise != null) {
+                sunriseText.setText(getString(R.string.sunrise, formatTime(sunrise, isMetric)));
+            }
+        });
+
+        getWeather.getSunset().observe(getViewLifecycleOwner(), sunset -> {
+            if (sunset != null) {
+                sunsetText.setText(getString(R.string.sunset, formatTime(sunset, isMetric)));
+            }
+        });
     }
+
+    private String formatTime(long unixTime, boolean isMetric) {
+        // Convert UNIX timestamp to milliseconds
+        Date date = new Date(unixTime * 1000);
+
+        // Define format based on metric system
+        SimpleDateFormat sdf = isMetric
+                ? new SimpleDateFormat("HH:mm", Locale.getDefault()) // 24-hour format
+                : new SimpleDateFormat("hh:mm a", Locale.getDefault()); // 12-hour format
+
+        sdf.setTimeZone(TimeZone.getDefault()); // Use device's local timezone
+        return sdf.format(date);
+    }
+
 
     /**
      * Observes specific weather data fields and updates the UI dynamically.
@@ -129,7 +160,7 @@ public class WeatherFragment extends Fragment {
      */
     private void observeWeatherData(GetWeather getWeather, TextView currentTemp,
                                     TextView tempRange, TextView feelsLike, TextView windSpeed,
-                                    ImageView weatherImage, TextView sunriseText, TextView sunsetText) {
+                                    ImageView weatherImage, TextView sunriseText, TextView sunsetText, TextView humidityTextView) {
         getWeather.getCurrTemp().observe(getViewLifecycleOwner(), temp -> {
             if (temp != null) {
                 currentTemp.setText(getWeather.getIsMetric().getValue() ?
@@ -178,6 +209,14 @@ public class WeatherFragment extends Fragment {
                 sunsetText.setText(getString(R.string.sunset, convertTime(sunset)));
             }
         });
+
+        getWeather.getHumidity().observe(getViewLifecycleOwner(), humidity -> {
+            if (humidity != null) {
+                String humidityText = humidity + "%";
+                humidityTextView.setText(humidityText);
+            }
+        });
+
 
         getWeather.getMain().observe(getViewLifecycleOwner(), main -> {
             if (main != null) {

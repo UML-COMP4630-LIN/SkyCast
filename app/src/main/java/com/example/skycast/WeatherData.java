@@ -166,6 +166,8 @@ public class WeatherData {
         }
     }
 
+
+
     /**
      * Weather class represents an element in the "weather" JSON array,
      * which contains data like the main weather condition and description.

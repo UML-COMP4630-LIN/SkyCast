@@ -13,159 +13,106 @@ Each section includes a title, profile picture, and descriptions for team member
     android:background="@drawable/help_background"
     tools:context=".ProfileFragment">
 
-       <androidx.constraintlayout.widget.ConstraintLayout
+       <LinearLayout
            android:layout_width="match_parent"
-           android:layout_height="match_parent">
+           android:layout_height="match_parent"
+           android:orientation="vertical">
 
               <TextView
                   android:id="@+id/mission_statement"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:layout_marginTop="10dp"
-                  android:layout_marginStart="10dp"
-                  android:layout_marginEnd="10dp"
+                  android:layout_margin="10sp"
+                  android:padding = "16sp"
                   android:gravity="center"
                   android:fontFamily="@font/quicksand"
                   android:justificationMode="inter_word"
-                  android:padding="16dp"
                   android:text="@string/missionStatement"
                   android:textColor="@color/white"
                   android:textSize="20sp"
-                  android:textStyle="bold"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toTopOf="parent" />
+                  android:textStyle="bold" />
 
               <TextView
                   android:id="@+id/header"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:layout_marginStart="10dp"
-                  android:layout_marginEnd="10dp"
-                  android:layout_marginBottom="10dp"
-                  android:padding="10dp"
+                  android:layout_margin="10sp"
+                  android:padding="10sp"
+                  android:layout_gravity="center"
+                  android:gravity="center"
                   android:text="@string/profileHeader"
                   android:textColor="@color/white"
                   android:textSize="35sp"
                   android:textStyle="bold"
-                  android:fontFamily="@font/quicksand"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toBottomOf="@id/mission_statement" />
+                  android:fontFamily="@font/quicksand" />
+
               <TextView
                   android:id="@+id/theodor_title"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_margin="10dp"
                   android:padding="10dp"
+                  android:layout_gravity="center"
+                  android:gravity="center"
                   android:text="@string/theodor_farag"
                   android:textColor="@color/white"
-                  android:textSize="25sp"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toBottomOf="@id/header" />
+                  android:textSize="25sp" />
 
               <de.hdodenhof.circleimageview.CircleImageView
                   android:id="@+id/theodor_image"
-                  android:layout_width="110dp"
-                  android:layout_height="110dp"
-                  android:layout_marginEnd="20dp"
-                  android:layout_marginTop="10dp"
-                  android:layout_marginBottom="20dp"
-                  android:layout_marginStart="10dp"
-
-                  android:src="@drawable/farag"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toBottomOf="@id/theodor_title" />
+                  android:layout_width="110sp"
+                  android:layout_height="110sp"
+                  android:layout_margin="10sp"
+                  android:layout_gravity="center"
+                  android:src="@drawable/farag" />
 
               <TextView
                   android:id="@+id/theodor_description"
-                  android:layout_width="270dp"
-                  android:layout_height="wrap_content"
-                  android:layout_marginEnd="10dp"
-                  android:justificationMode="inter_word"
-                  android:text="@string/theo_description1"
-                  android:textSize = "20sp"
-                  android:textColor="@color/white"
-                  android:textStyle="bold"
-                  android:fontFamily="@font/quicksand"
-
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toEndOf="@+id/theodor_image"
-                  app:layout_constraintTop_toBottomOf="@id/theodor_title" />
-
-              <TextView
-                  android:id="@+id/theodor_description2"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:layout_marginStart="16dp"
-                  android:layout_marginEnd="10dp"
-                  android:paddingRight = "5dp"
+                  android:layout_margin="10sp"
+                  android:padding="10sp"
+                  android:layout_gravity="center"
+                  android:gravity="center"
                   android:justificationMode="inter_word"
-                  android:text="@string/theo_description2"
+                  android:text="@string/theo_desc"
                   android:textSize = "20sp"
                   android:textColor="@color/white"
                   android:textStyle="bold"
-                  android:fontFamily="@font/quicksand"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toBottomOf="@id/theodor_description" />
+                  android:fontFamily="@font/quicksand" />
 
               <TextView
                   android:id="@+id/angelos_title"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
+                  android:layout_gravity="center"
+                  android:gravity="center"
                   android:layout_margin="10dp"
-                  android:paddingStart="10dp"
-                  android:paddingEnd="10dp"
-                  android:paddingBottom="10dp"
+                  android:padding="10dp"
                   android:text="@string/angelos_boules"
                   android:textColor="@color/white"
-                  android:textSize="25sp"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintTop_toBottomOf="@id/theodor_description2" />
+                  android:textSize="25sp" />
 
               <de.hdodenhof.circleimageview.CircleImageView
                   android:id="@+id/angelos_image"
                   android:layout_width="110dp"
                   android:layout_height="110dp"
-                  android:layout_marginEnd="8dp"
-                  android:layout_marginTop="10dp"
-                  android:layout_marginBottom="20dp"
-                  android:src="@drawable/angelos"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toEndOf="@id/angelos_description1"
-                  app:layout_constraintTop_toBottomOf="@id/angelos_title" />
-
+                  android:layout_margin="10dp"
+                  android:layout_gravity="center"
+                  android:src="@drawable/angelos" />
               <TextView
                   android:id="@+id/angelos_description1"
-                  android:layout_width="270dp"
-                  android:layout_height="wrap_content"
-                  android:layout_marginStart="16dp"
-                  android:justificationMode="inter_word"
-                  android:text="@string/angelos_description1"
-                  android:textSize = "20sp"
-                  android:textColor="@color/white"
-                  android:textStyle="bold"
-                  android:fontFamily="@font/quicksand"
-                  app:layout_constraintEnd_toStartOf="@id/angelos_image"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toBottomOf="@id/angelos_title" />
-
-              <TextView
-                  android:id="@+id/angelos_description2"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:layout_marginStart="16dp"
-                  android:layout_marginEnd="16dp"
+                  android:layout_margin="10sp"
+                  android:layout_gravity="center"
+                  android:gravity="center"
                   android:justificationMode="inter_word"
-                  android:text="@string/angelos_description2"
+                  android:text="@string/angelos_desc"
                   android:textSize = "20sp"
                   android:textColor="@color/white"
                   android:textStyle="bold"
-                  android:fontFamily="@font/quicksand"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toBottomOf="@id/angelos_description1" />
+                  android:fontFamily="@font/quicksand" />
 
               <TextView
                   android:id="@+id/afsa_title"
@@ -173,61 +120,32 @@ Each section includes a title, profile picture, and descriptions for team member
                   android:layout_height="wrap_content"
                   android:textColor="@color/white"
                   android:layout_margin="10dp"
-                  android:paddingStart="10dp"
-                  android:paddingEnd="10dp"
-                  android:paddingBottom="10dp"
+                  android:padding="10dp"
+                  android:layout_gravity="center"
+                  android:gravity="center"
                   android:text="@string/afsa_nafe"
-                  android:textSize="25sp"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toBottomOf="@id/angelos_description2" />
+                  android:textSize="25sp" />
 
               <de.hdodenhof.circleimageview.CircleImageView
                   android:id="@+id/afsa_image"
                   android:layout_width="110dp"
                   android:layout_height="110dp"
-                  android:layout_marginEnd="20dp"
-                  android:layout_marginTop="10dp"
-                  android:layout_marginBottom="20dp"
-                  android:layout_marginStart="10dp"
-                  android:src="@drawable/afsa"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toBottomOf="@id/afsa_title" />
-
+                  android:layout_margin="10dp"
+                  android:layout_gravity="center"
+                  android:src="@drawable/afsa" />
               <TextView
                   android:id="@+id/afsa_description"
-                  android:layout_width="270dp"
-                  android:layout_height="wrap_content"
-                  android:layout_marginEnd="16dp"
-                  android:justificationMode="inter_word"
-                  android:text="@string/afsa_description1"
-                  android:textSize = "20sp"
-                  android:textColor="@color/white"
-                  android:textStyle="bold"
-                  android:fontFamily="@font/quicksand"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toEndOf="@id/afsa_image"
-                  app:layout_constraintTop_toBottomOf="@id/afsa_title" />
-
-              <TextView
-                  android:id="@+id/afsa_description2"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:layout_marginStart="16dp"
-                  android:layout_marginEnd="10dp"
-                  android:paddingRight = "5dp"
+                  android:layout_margin="10dp"
+                  android:layout_gravity="center"
+                  android:gravity="center"
+                  android:padding="10sp"
                   android:justificationMode="inter_word"
-                  android:text="@string/afsa_description2"
-                  android:textSize = "20sp"
+                  android:text="@string/afsa_desc"
+                  android:textSize ="20sp"
                   android:textColor="@color/white"
                   android:textStyle="bold"
-                  android:fontFamily="@font/quicksand"
-                  android:paddingBottom="10dp"
-                  app:layout_constraintEnd_toEndOf="parent"
-                  app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintTop_toBottomOf="@id/afsa_description" />
-
-       </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
+                  android:fontFamily="@font/quicksand"/>
+       </LinearLayout>
 </ScrollView>

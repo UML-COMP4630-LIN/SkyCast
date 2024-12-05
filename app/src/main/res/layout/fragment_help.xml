@@ -14,183 +14,134 @@ including Home, City, and Profile, along with relevant icons and descriptions.
     android:background="@drawable/help_background"
     tools:context=".HelpFragment">
 
-    <!-- Root ConstraintLayout Section: Contains all the content in a scrollable layout -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <!-- Help Introduction Section -->
         <TextView
             android:id="@+id/helpIntro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="10sp"
             android:fontFamily="@font/quicksand"
             android:justificationMode="inter_word"
-            android:padding="16dp"
+            android:padding="16sp"
             android:text="@string/helpIntro"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="bold" />
 
         <!-- Home Section -->
         <TextView
             android:id="@+id/homeSectionHeading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:padding="10sp"
+            android:layout_margin="10sp"
             android:justificationMode="inter_word"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:text="@string/helpSectionHeader_Main"
             android:textColor="@color/white"
             android:textSize="25sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/helpIntro" />
-
-        <TextView
-            android:id="@+id/homeSectionText1"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:paddingEnd="10dp"
-            android:paddingStart="10dp"
-            android:fontFamily="@font/quicksand"
-            android:justificationMode="inter_word"
-            android:text="@string/helpSectionText_Main1"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/homeSectionHeading" />
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/homeIconHelp"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/homeicon_help"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/homeSectionHeading" />
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            android:layout_margin="10sp"
+            android:layout_gravity="center"
+            android:src="@drawable/homeicon_help" />
 
         <TextView
-            android:id="@+id/homeSectionText2"
+            android:id="@+id/homeSectionText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:layout_margin="10sp"
             android:fontFamily="@font/quicksand"
             android:justificationMode="inter_word"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:paddingBottom="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:text="@string/helpSectionText_Main2"
+            android:text="@string/helpSectionText_Main"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/homeSectionText1" />
+            android:textStyle="bold" />
 
         <!-- City Section -->
         <TextView
             android:id="@+id/citySectionHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
+            android:padding="10sp"
+            android:layout_margin="10sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+
             android:text="@string/citySectionHeader_Main"
             android:textColor="@color/white"
             android:textSize="25sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/homeSectionText2" />
+            android:textStyle="bold"/>
 
         <ImageView
             android:id="@+id/cityIconHelp"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/cityicon_help"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/citySectionHeader" />
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            android:layout_margin="10sp"
+            android:layout_gravity="center"
+            android:src="@drawable/cityicon_help"/>
 
         <TextView
             android:id="@+id/citySectionText1"
-            android:layout_width="280dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:paddingEnd="10dp"
-            android:paddingStart="10dp"
+            android:padding="10sp"
+            android:layout_margin="10sp"
             android:fontFamily="@font/quicksand"
             android:justificationMode="inter_word"
-            android:text="@string/helpSectionText_City1"
+            android:text="@string/helpSectionText_City"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/cityIconHelp"
-            app:layout_constraintTop_toBottomOf="@id/citySectionHeader" />
+            android:textStyle="bold" />
 
         <!-- Profile Section -->
         <TextView
             android:id="@+id/profileSectionHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
+            android:padding="10sp"
+            android:layout_margin="10sp"
+            android:gravity="center"
+            android:layout_gravity="center"
             android:text="@string/helpSectionHeader_Profile"
             android:textColor="@color/white"
             android:textSize="25sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/citySectionText1" />
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/profileIconHelp"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
-            android:layout_marginEnd="8dp"
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            android:padding="10sp"
+            android:layout_margin="10sp"
+            android:layout_gravity="center"
             android:src="@drawable/profileicon_help"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/profileSectionHeader" />
+            />
 
         <TextView
             android:id="@+id/profileSectionText1"
-            android:layout_width="280dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:paddingEnd="10dp"
-            android:paddingStart="10dp"
+            android:padding="10sp"
+            android:layout_margin="10sp"
             android:fontFamily="@font/quicksand"
             android:justificationMode="inter_word"
-            android:text="@string/helpSectionText_Profile1"
+            android:text="@string/helpSectionText_Profile"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/profileSectionHeader" />
+            android:textStyle="bold"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </ScrollView>
