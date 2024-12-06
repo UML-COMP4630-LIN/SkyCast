@@ -246,7 +246,7 @@ public class WeatherFragment extends Fragment {
                         };
                         break;
                     case "Clouds":
-                        weatherImage.setImageResource(R.drawable.cloud);
+                        weatherImage.setImageResource(R.drawable.perfectclouds);
                         colors = new int[]{
                                 Color.parseColor("#B0BEC5"), // Gray
                                 Color.parseColor("#CFD8DC"), // Light gray
